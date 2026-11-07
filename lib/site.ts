@@ -3,10 +3,10 @@
 
 export const SITE = {
   name: "Jesse Razo",
-  url: "https://jesserazo.com",
-  title: "Jesse Razo | Faith, Family, Freedom, Legacy",
+  url: "https://www.jesserazo.com",
+  title: "Jesse Razo | Faith First. Freedom by Design.",
   description:
-    "Jesse Razo helps faith-driven founders build businesses that serve their faith, their family and their future. From Operator to Architect.",
+    "Jesse Razo helps faith-driven founders move from Operator to Architect. Build a business that runs on systems, get your time back and build a legacy.",
   company: "Legacy Media LLC",
   tagline: "One System. One Flow. One Outcome. FREEDOM.",
 };

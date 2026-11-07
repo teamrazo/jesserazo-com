@@ -42,7 +42,7 @@ const FOOT_LEGAL: [string, string][] = [
 ];
 
 function FootLink({ href, children }: { href: string; children: string }) {
-  const cls = "text-sm text-white/60 hover:text-white";
+  const cls = "inline-block py-1.5 text-sm text-white/60 hover:text-white";
   return href.startsWith("http") ? (
     <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>{children}</a>
   ) : (
@@ -72,7 +72,7 @@ export default function Footer() {
         {COLUMNS.map((col) => (
           <div key={col.title}>
             <p className="mb-4 text-sm font-semibold">{col.title}</p>
-            <ul className="space-y-2.5">
+            <ul className="space-y-1">
               {col.links.map(([href, label]) => (
                 <li key={label}><FootLink href={href}>{label}</FootLink></li>
               ))}
@@ -93,11 +93,11 @@ export default function Footer() {
 
       {/* Legal */}
       <div className="border-t border-white/10">
-        <Container className="flex flex-col gap-3 py-6 text-xs text-white/40 md:flex-row md:items-center md:justify-between">
+        <Container className="flex flex-col gap-3 py-6 text-xs text-white/60 md:flex-row md:items-center md:justify-between">
           <p>&copy; {year} &bull; {SITE.company} &bull; All Rights Reserved.</p>
-          <div className="flex flex-wrap gap-x-4 gap-y-1">
+          <div className="flex flex-wrap gap-x-4">
             {FOOT_LEGAL.map(([href, label]) => (
-              <a key={href} href={href} target="_blank" rel="noopener noreferrer" className="hover:text-white">{label}</a>
+              <a key={href} href={href} target="_blank" rel="noopener noreferrer" className="inline-block py-1.5 hover:text-white">{label}</a>
             ))}
           </div>
         </Container>

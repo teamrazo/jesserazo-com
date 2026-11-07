@@ -81,18 +81,21 @@ export function PhotoSlot({
   className = "",
   dark = false,
   priority = false,
+  sizes = "(min-width: 768px) 50vw, 100vw",
 }: {
   label: string;
   photo?: string;
   className?: string;
   dark?: boolean;
   priority?: boolean;
+  /** Use "1px" for the breakpoint where this copy is hidden so it never downloads at full size. */
+  sizes?: string;
 }) {
   const src = photo && existsSync(join(process.cwd(), "public", "photos", photo)) ? `/photos/${photo}` : null;
   if (src) {
     return (
       <div className={`${className.includes("absolute") ? "" : "relative "}overflow-hidden ${className}`}>
-        <Image src={src} alt={label} fill priority={priority} sizes="(min-width: 768px) 50vw, 100vw" className="object-cover transition-transform duration-[1200ms] ease-out hover:scale-[1.04]" />
+        <Image src={src} alt={label} fill priority={priority} sizes={sizes} className="object-cover transition-transform duration-[1200ms] ease-out hover:scale-[1.04]" />
       </div>
     );
   }
@@ -131,7 +134,7 @@ export function PageHero({
     <section className="relative overflow-hidden bg-charcoal">
       {photo && (
         <>
-          <PhotoSlot label="Jesse Razo" photo={photo} priority dark className="absolute inset-y-0 right-0 hidden w-1/2 md:flex" />
+          <PhotoSlot label="Jesse Razo" photo={photo} priority sizes="(min-width: 768px) 50vw, 1px" dark className="absolute inset-y-0 right-0 hidden w-1/2 md:flex" />
           <div className="absolute inset-0 hidden bg-gradient-to-r from-charcoal from-50% to-transparent to-75% md:block" aria-hidden="true" />
         </>
       )}
@@ -143,7 +146,7 @@ export function PageHero({
         />
         {body && <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/70">{body}</p>}
         {children && <div className="mt-10">{children}</div>}
-        {photo && <PhotoSlot label="Jesse Razo" photo={photo} dark className="mt-12 aspect-[4/5] w-full md:hidden" />}
+        {photo && <PhotoSlot label="Jesse Razo" photo={photo} priority sizes="(min-width: 768px) 1px, 100vw" dark className="mt-12 aspect-[4/5] w-full md:hidden" />}
       </Container>
     </section>
   );

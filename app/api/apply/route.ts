@@ -1,13 +1,11 @@
 import { NextResponse } from "next/server";
+import { guardedJson } from "@/lib/guard";
 import { EMAIL_RE, attributionNote, clean, envTags, ghlConfigured, upsertWithNote } from "@/lib/ghl";
 
 export async function POST(req: Request) {
-  let data: Record<string, unknown>;
-  try {
-    data = await req.json();
-  } catch {
-    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
-  }
+  const parsed = await guardedJson(req);
+  if (parsed instanceof NextResponse) return parsed;
+  const data = parsed;
 
   if (clean(data.website)) return NextResponse.json({ ok: true }); // honeypot
 

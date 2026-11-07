@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import { PERSON_ID, jsonLd, pageMeta } from "@/lib/seo";
+import { SITE } from "@/lib/site";
 import { Button, Eyebrow, PageHero, PhotoSlot, Section } from "@/components/ui";
 import { ApplicationForm } from "@/components/Forms";
 import { PATHS } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Work with Jesse",
-  description: "Apply to work with Jesse Razo. For faith-driven founders ready to move from Operator to Architect.",
-  alternates: { canonical: "/work-with-jesse" },
-};
+  description: "Apply to work with Jesse Razo. For faith-driven founders ready to leave the Operator seat, win back their time and run the business on systems.",
+  path: "/work-with-jesse",
+});
 
 const FOR = [
   "You lead with faith and want your business to reflect it.",
@@ -51,6 +53,25 @@ export default function WorkWithJesse() {
   const calendarUrl = process.env.NEXT_PUBLIC_APPLY_CALENDAR_URL || undefined;
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLd({
+          "@graph": [
+            {
+              "@type": "FAQPage",
+              mainEntity: FAQ.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+            },
+            {
+              "@type": "Service",
+              name: "Work with Jesse Razo",
+              serviceType: "Business systems and AI automation advisory",
+              provider: { "@id": PERSON_ID },
+              audience: { "@type": "Audience", audienceType: "Faith-driven founders and business owners" },
+              url: `${SITE.url}/work-with-jesse`,
+            },
+          ],
+        })}
+      />
       <PageHero
         eyebrow="Work with Jesse"
         photo="work-hero.jpg"

@@ -1,10 +1,20 @@
 import type { MetadataRoute } from "next";
 import { SITE } from "@/lib/site";
 
+const PAGES: { path: string; priority: number; image: string }[] = [
+  { path: "", priority: 1, image: "hero.jpg" },
+  { path: "/work-with-jesse", priority: 0.9, image: "work-hero.jpg" },
+  { path: "/about", priority: 0.8, image: "about-hero.jpg" },
+  { path: "/legacy", priority: 0.7, image: "legacy-hero.jpg" },
+];
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  return ["", "/about", "/work-with-jesse", "/legacy"].map((p) => ({
-    url: `${SITE.url}${p}`,
+  const lastModified = new Date();
+  return PAGES.map((p) => ({
+    url: `${SITE.url}${p.path}`,
+    lastModified,
     changeFrequency: "monthly",
-    priority: p === "" ? 1 : 0.8,
+    priority: p.priority,
+    images: [`${SITE.url}/photos/${p.image}`],
   }));
 }

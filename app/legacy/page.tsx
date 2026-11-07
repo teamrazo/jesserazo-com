@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { Button, Eyebrow, PageHero, PhotoSlot, Section } from "@/components/ui";
 import { LINKS, PILLARS } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Legacy",
-  description: "Jesse Razo's vision for legacy: faith, family, freedom and the Legacy Fund.",
-  alternates: { canonical: "/legacy" },
-};
+export const metadata: Metadata = pageMeta({
+  title: "Legacy: Build What Outlasts You",
+  description: "Jesse Razo's legacy vision: faith, family and freedom working together, and the Legacy Fund that gives 10% of top-line revenue forward.",
+  path: "/legacy",
+});
 
 export default function Legacy() {
   return (

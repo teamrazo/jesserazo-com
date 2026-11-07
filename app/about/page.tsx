@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
+import { PERSON_ID, jsonLd, pageMeta } from "@/lib/seo";
+import { SITE } from "@/lib/site";
 import { Button, Eyebrow, PageHero, PhotoSlot, Section } from "@/components/ui";
 import { VALUES } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "My Story",
-  description: "How Jesse Razo went from Operator to Architect, and why faith and family come first.",
-  alternates: { canonical: "/about" },
-};
+export const metadata: Metadata = pageMeta({
+  title: "My Story: From Operator to Architect",
+  description: "How Jesse Razo went from running everything himself to building on purpose. Faith first, family second, then a business built on systems.",
+  path: "/about",
+});
 
 // DRAFT copy. Replace with Jesse's story beats (low point, turning point, what changed, today).
 const CHAPTERS = [
@@ -42,6 +44,10 @@ const CHAPTERS = [
 export default function About() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLd({ "@type": "ProfilePage", url: `${SITE.url}/about`, mainEntity: { "@id": PERSON_ID } })}
+      />
       <PageHero
         eyebrow="My story"
         photo="about-hero.jpg"
