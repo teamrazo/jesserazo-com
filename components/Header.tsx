@@ -4,15 +4,15 @@ import { Container } from "./ui";
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-40 border-b border-charcoal/10 bg-ivory/90 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-white/10 bg-charcoal/95 backdrop-blur">
       <Container className="flex h-16 items-center justify-between">
-        <Link href="/" className="font-serif text-xl font-semibold text-charcoal">
+        <Link href="/" className="font-display text-2xl uppercase tracking-wide text-white">
           Jesse Razo
         </Link>
 
         <nav aria-label="Main" className="hidden items-center gap-8 md:flex">
-          {NAV.slice(0, 1).concat(NAV.slice(2)).map((item) => (
-            <Link key={item.href} href={item.href} className="text-sm text-ink hover:text-purple">
+          {NAV.filter((n) => n.href !== "/work-with-jesse").map((item) => (
+            <Link key={item.href} href={item.href} className="text-sm text-white/80 hover:text-white">
               {item.label}
             </Link>
           ))}
@@ -25,12 +25,12 @@ export default function Header() {
         </nav>
 
         <details className="relative md:hidden">
-          <summary className="cursor-pointer list-none rounded-full border border-charcoal/20 px-4 py-2 text-sm">
+          <summary className="cursor-pointer list-none rounded-full border border-white/30 px-4 py-2 text-sm text-white">
             Menu
           </summary>
-          <div className="absolute right-0 mt-2 w-56 rounded-xl border border-charcoal/10 bg-white p-2 shadow-lg">
+          <div className="absolute right-0 mt-2 w-56 rounded-xl border border-white/10 bg-charcoal p-2 shadow-lg">
             {NAV.map((item) => (
-              <Link key={item.href} href={item.href} className="block rounded-lg px-3 py-2 text-sm hover:bg-sand">
+              <Link key={item.href} href={item.href} className="block rounded-lg px-3 py-2 text-sm text-white/90 hover:bg-white/10">
                 {item.label}
               </Link>
             ))}

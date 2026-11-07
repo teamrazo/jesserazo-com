@@ -1,15 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ivory: #f7f4ef;
-  --color-sand: #ece6dc;
-  --color-charcoal: #1a1a1f;
-  --color-ink: #2b2b33;
-  --color-muted: #5f5f6b;
+  /* Light / tint / dark section system. Purple is the single accent. */
+  --color-ivory: #ffffff;
+  --color-sand: #eef1f4;
+  --color-charcoal: #0a0a0f;
+  --color-ink: #1c1c22;
+  --color-muted: #5b6070;
   --color-purple: #a83ac4;
   --color-purple-deep: #8b3fd9;
-  --color-gold: #c9a45c;
-  --font-serif: "Fraunces Variable", Georgia, serif;
+  --color-gold: #d48ae8;
+  --font-display: "Anton", Impact, "Arial Narrow", sans-serif;
+  --font-serif: "Anton", Impact, sans-serif;
   --font-sans: "Inter Variable", system-ui, sans-serif;
 }
 
@@ -26,11 +28,19 @@ body {
 
 @layer base {
   h1,
-  h2,
-  h3 {
-    font-family: var(--font-serif);
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-transform: uppercase;
+    line-height: 0.95;
+    letter-spacing: 0;
     color: var(--color-charcoal);
+  }
+  h3 {
+    font-family: var(--font-sans);
+    font-weight: 700;
     letter-spacing: -0.01em;
+    color: var(--color-charcoal);
   }
 }
 

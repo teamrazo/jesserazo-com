@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Button, Container, Eyebrow, Section } from "@/components/ui";
+import { Button, Eyebrow, PageHero, Section } from "@/components/ui";
 import { ApplicationForm } from "@/components/Forms";
 import { PATHS } from "@/lib/site";
 
@@ -51,19 +51,14 @@ export default function WorkWithJesse() {
   const calendarUrl = process.env.NEXT_PUBLIC_APPLY_CALENDAR_URL || undefined;
   return (
     <>
-      <section className="bg-ivory pb-12 pt-16 md:pt-24">
-        <Container className="max-w-3xl">
-          <Eyebrow>Work with Jesse</Eyebrow>
-          <h1 className="text-4xl leading-tight md:text-6xl">Build the business on purpose.</h1>
-          <p className="mt-6 text-lg leading-relaxed text-muted">
-            I work with a small number of faith-driven founders at a time. If you are ready to stop operating and start
-            architecting, apply below.
-          </p>
-          <div className="mt-8">
-            <Button href="#apply">Apply now</Button>
-          </div>
-        </Container>
-      </section>
+      <PageHero
+        eyebrow="Work with Jesse"
+        title="Build the business"
+        accent="on purpose."
+        body="I work with a small number of faith-driven founders at a time. If you are ready to stop operating and start architecting, apply below."
+      >
+        <Button href="#apply">Apply now</Button>
+      </PageHero>
 
       <Section tone="sand">
         <div className="grid gap-10 md:grid-cols-2">
@@ -94,11 +89,11 @@ export default function WorkWithJesse() {
 
       <Section>
         <Eyebrow>The process</Eyebrow>
-        <h2 className="text-3xl md:text-4xl">Three simple steps.</h2>
+        <h2 className="text-5xl md:text-7xl">Three simple steps.</h2>
         <ol className="mt-10 grid gap-6 md:grid-cols-3">
           {STEPS.map((s, i) => (
             <li key={s.name} className="rounded-2xl border border-charcoal/10 bg-white p-7">
-              <p className="font-serif text-sm text-gold">Step {i + 1}</p>
+              <p className="text-xs font-semibold text-purple">Step {i + 1}</p>
               <h3 className="mt-2 text-2xl">{s.name}</h3>
               <p className="mt-2 text-muted">{s.body}</p>
             </li>
@@ -109,7 +104,7 @@ export default function WorkWithJesse() {
       <Section id="apply" tone="sand">
         <div className="mx-auto max-w-3xl">
           <Eyebrow>Application</Eyebrow>
-          <h2 className="text-3xl md:text-4xl">Tell me about your business.</h2>
+          <h2 className="text-5xl md:text-7xl">Tell me about your business.</h2>
           <p className="mb-8 mt-4 text-muted">Honest answers help us make the most of your call.</p>
           <ApplicationForm calendarUrl={calendarUrl} />
         </div>
@@ -117,10 +112,10 @@ export default function WorkWithJesse() {
 
       <Section>
         <Eyebrow>Not ready yet?</Eyebrow>
-        <h2 className="text-3xl md:text-4xl">Other ways to start.</h2>
+        <h2 className="text-5xl md:text-7xl">Other ways to start.</h2>
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {PATHS.filter((p) => p.name !== "Partner Program").map((p) => (
-            <div key={p.name} className="flex flex-col rounded-2xl border border-charcoal/10 bg-white p-6">
+            <div key={p.name} className="flex flex-col border border-charcoal/10 bg-white p-6">
               <h3 className="text-xl">{p.name}</h3>
               <p className="mt-2 flex-1 text-sm text-muted">{p.body}</p>
               <div className="mt-5">
@@ -134,8 +129,8 @@ export default function WorkWithJesse() {
       <Section tone="sand">
         <div className="mx-auto max-w-3xl">
           <Eyebrow>FAQ</Eyebrow>
-          <h2 className="text-3xl md:text-4xl">Questions.</h2>
-          <div className="mt-8 divide-y divide-charcoal/10 rounded-2xl bg-white">
+          <h2 className="text-5xl md:text-7xl">Questions.</h2>
+          <div className="mt-8 divide-y divide-charcoal/10 bg-white">
             {FAQ.map((f) => (
               <details key={f.q} className="group p-6">
                 <summary className="flex cursor-pointer list-none items-center justify-between font-medium text-charcoal">

@@ -1,172 +1,195 @@
 import { Button, Container, Eyebrow, PhotoSlot, Section } from "@/components/ui";
-import { NewsletterForm } from "@/components/Forms";
-import { LINKS, PATHS, PILLARS, STATS, TIMEBACK } from "@/lib/site";
+import { LINKS, PATHS, STATS, TIMEBACK } from "@/lib/site";
 
 export default function Home() {
+  const [challenge, audit, lever, partner] = PATHS;
+
   return (
     <>
-      {/* Hero */}
-      <section className="bg-ivory pb-16 pt-16 md:pb-24 md:pt-24">
-        <Container className="grid items-center gap-12 md:grid-cols-[1.1fr_0.9fr]">
-          <div>
-            <Eyebrow>Faith. Family. Freedom. Legacy.</Eyebrow>
-            <h1 className="text-4xl leading-[1.1] md:text-6xl">
-              Faith first. Family always. <span className="text-purple">Freedom by design.</span>
-            </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
-              I help faith-driven founders build businesses that serve their faith, their family and their future. Less
-              operating. More architecting. A legacy that lasts.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button href="/work-with-jesse">Work with Jesse</Button>
-              <Button href="/about" variant="ghost">Read my story</Button>
-            </div>
+      {/* Hero: full dark, photo right, stat bar inline */}
+      <section className="relative overflow-hidden bg-charcoal">
+        <PhotoSlot label="Jesse hero portrait" dark className="absolute inset-y-0 right-0 hidden w-1/2 items-start pt-24 md:flex" />
+        <div className="absolute inset-0 hidden bg-gradient-to-r from-charcoal via-charcoal/80 to-transparent md:block" aria-hidden="true" />
+        <Container className="relative pb-12 pt-24 md:pt-40">
+          <Eyebrow className="text-white/70">Founder. Builder. Faith-driven.</Eyebrow>
+          <h1 className="max-w-4xl text-6xl text-white md:text-8xl lg:text-[7.5rem]">
+            Faith first.
+            <br />
+            <span className="text-purple">Freedom by design.</span>
+          </h1>
+          <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/75">
+            Build a business that serves your faith, your family and your future. Stop operating. Start architecting.
+          </p>
+          <div className="mt-10">
+            <Button href="/work-with-jesse">Work with Jesse</Button>
           </div>
-          <PhotoSlot label="Jesse headshot" className="aspect-[4/5] w-full" />
+
+          <div className="mt-20 grid grid-cols-2 gap-8 border-t border-white/10 pt-10 md:grid-cols-4">
+            {STATS.map((s) => (
+              <div key={s.label} className="flex items-center gap-3">
+                <span className="font-display text-4xl text-white md:text-5xl">{s.value}</span>
+                <span className="max-w-[9rem] text-xs leading-snug text-white/60">{s.label}</span>
+              </div>
+            ))}
+          </div>
         </Container>
       </section>
 
-      {/* Stat bar */}
-      <section aria-label="Track record" className="border-y border-charcoal/10 bg-white">
-        <Container className="grid grid-cols-2 gap-6 py-10 md:grid-cols-4">
-          {STATS.map((s) => (
-            <div key={s.label} className="text-center">
-              <p className="font-serif text-3xl text-charcoal md:text-4xl">{s.value}</p>
-              <p className="mt-1 text-sm text-muted">{s.label}</p>
-            </div>
-          ))}
-        </Container>
-      </section>
-
-      {/* Pillars */}
+      {/* Audience + bento grid of paths */}
       <Section>
-        <div className="max-w-2xl">
-          <Eyebrow>What I stand for</Eyebrow>
-          <h2 className="text-3xl md:text-4xl">Four pillars. One life in order.</h2>
+        <div className="grid gap-8 md:grid-cols-2 md:items-end">
+          <div>
+            <Eyebrow>For faith-driven founders</Eyebrow>
+            <h2 className="text-5xl md:text-7xl">
+              You were built
+              <br />
+              for more than the grind.
+            </h2>
+          </div>
+          <p className="max-w-md text-lg leading-relaxed text-muted md:justify-self-end">
+            Build a business that runs without you. Get your time back for the people who matter most. Then build
+            something that lasts.
+          </p>
         </div>
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {PILLARS.map((p, i) => (
-            <div key={p.name} className="rounded-2xl border border-charcoal/10 bg-white p-6">
-              <p className="font-serif text-sm text-gold">0{i + 1}</p>
-              <h3 className="mt-2 text-2xl">{p.name}</h3>
-              <p className="mt-3 font-medium text-charcoal">{p.line}</p>
-              <p className="mt-2 text-sm leading-relaxed text-muted">{p.body}</p>
-            </div>
-          ))}
+
+        <div className="mt-14 grid gap-5 md:grid-cols-3">
+          <BentoCard path={challenge} tone="light" className="md:col-span-2" title="Put first things first." />
+          <BentoCard path={audit} tone="dark" title="Find your time leaks." />
+          <BentoCard path={lever} tone="dark" title="Run on systems." />
+          <BentoCard path={partner} tone="dark" className="md:col-span-2" title="Earn, learn and grow." />
         </div>
       </Section>
 
-      {/* Story teaser */}
+      {/* Story */}
       <Section tone="sand">
-        <div className="grid items-center gap-12 md:grid-cols-2">
-          <PhotoSlot label="Jesse at work" className="aspect-[4/3] w-full" />
+        <div className="grid items-center gap-12 md:grid-cols-2 md:gap-20">
+          <PhotoSlot label="Jesse at work" className="aspect-[4/5] w-full" />
           <div>
             <Eyebrow>My story</Eyebrow>
-            <h2 className="text-3xl md:text-4xl">From Operator to Architect.</h2>
-            <p className="mt-5 leading-relaxed text-muted">
+            <h2 className="text-6xl md:text-8xl">
+              From Operator
+              <br />
+              to Architect.
+            </h2>
+            <p className="mt-8 leading-relaxed text-muted">
               I spent years as the Operator. Every decision, every fire and every late night ran through me. The
               business grew, and it took more than it gave.
             </p>
             <p className="mt-4 leading-relaxed text-muted">
-              Faith reset my priorities. Systems gave me my time back. Now I build the business on purpose, and I help
-              other founders do the same.
+              <strong className="text-charcoal">Order changed everything.</strong> Faith first. Family second. Then a
+              business built on systems instead of on me.
             </p>
-            <div className="mt-8">
-              <Button href="/about" variant="ghost">Read the full story</Button>
+            <p className="mt-4 leading-relaxed text-muted">
+              Now I help faith-driven founders do the same. Clear direction, the right systems and{" "}
+              <strong className="text-charcoal">time back for what matters most.</strong>
+            </p>
+            <div className="mt-10">
+              <Button href="/about">Read my story</Button>
             </div>
           </div>
         </div>
       </Section>
 
-      {/* Paths */}
+      {/* TimeBACK System */}
       <Section>
-        <div className="max-w-2xl">
-          <Eyebrow>How I help</Eyebrow>
-          <h2 className="text-3xl md:text-4xl">Start where you are.</h2>
-          <p className="mt-4 text-muted">The shortest distance to freedom is a straight line. Pick the step that fits today.</p>
+        <div className="grid gap-8 md:grid-cols-2 md:items-end">
+          <div>
+            <Eyebrow>The system</Eyebrow>
+            <h2 className="text-5xl md:text-7xl">
+              The TimeBACK
+              <br />
+              <span className="text-purple">System.</span>
+            </h2>
+          </div>
+          <p className="max-w-md text-lg leading-relaxed text-muted md:justify-self-end">
+            AI scales whatever you already have. Direction comes first, then speed. Four steps, reviewed every 90 days.
+          </p>
         </div>
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
-          {PATHS.map((p) => (
-            <div key={p.name} className="flex flex-col rounded-2xl border border-charcoal/10 bg-white p-7">
-              <p className="text-sm text-purple">{p.for}</p>
-              <h3 className="mt-2 text-2xl">{p.name}</h3>
-              <p className="mt-3 flex-1 text-muted">{p.body}</p>
-              <div className="mt-6">
-                <Button href={p.href} variant="ghost">{p.cta}</Button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      {/* TimeBACK */}
-      <Section tone="dark">
-        <div className="max-w-2xl">
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-gold">The system</p>
-          <h2 className="text-3xl md:text-4xl">The TimeBACK System.</h2>
-          <p className="mt-4">AI scales whatever you already have. Direction first, then speed. Here is the cycle.</p>
-        </div>
-        <ol className="mt-12 grid gap-6 md:grid-cols-4">
+        <ol className="mt-14 grid gap-px overflow-hidden bg-charcoal/10 md:grid-cols-4">
           {TIMEBACK.map((t, i) => (
-            <li key={t.step} className="rounded-2xl border border-white/10 p-6">
-              <p className="font-serif text-sm text-gold">Step {i + 1}</p>
-              <h3 className="mt-2 text-2xl">{t.step}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-white/70">{t.body}</p>
+            <li key={t.step} className="bg-ivory p-8">
+              <p className="text-xs font-semibold text-purple">0{i + 1}</p>
+              <h3 className="mt-3 text-2xl">{t.step}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-muted">{t.body}</p>
             </li>
           ))}
         </ol>
         <div className="mt-10">
-          <Button href={LINKS.timeback} variant="light">Start with a TimeBACK Audit</Button>
+          <Button href={LINKS.timeback} variant="ghost">Start with a TimeBACK Audit</Button>
         </div>
       </Section>
 
-      {/* Legacy teaser */}
-      <Section tone="sand">
-        <div className="grid items-center gap-12 md:grid-cols-2">
+      {/* Legacy */}
+      <Section tone="dark">
+        <Eyebrow className="text-white/60">Legacy</Eyebrow>
+        <h2 className="text-5xl md:text-8xl">
+          Build what
+          <br />
+          <span className="text-purple">outlasts you.</span>
+        </h2>
+        <div className="mt-14 grid gap-12 md:grid-cols-2">
+          <PhotoSlot label="Family moment" dark className="aspect-[4/5] w-full" />
           <div>
-            <Eyebrow>Legacy</Eyebrow>
-            <h2 className="text-3xl md:text-4xl">Build what outlasts you.</h2>
-            <p className="mt-5 leading-relaxed text-muted">
-              Legacy is not what you leave behind. It is what you build into people while you are here. Ten percent of
-              top-line revenue goes to the Legacy Fund, so every client helps build something bigger.
+            <p className="text-lg leading-relaxed">
+              Legacy is not what you leave behind. It is what you build into people while you are here.
             </p>
-            <div className="mt-8">
-              <Button href="/legacy" variant="ghost">See the legacy vision</Button>
+            <ol className="mt-8 divide-y divide-white/10 border-y border-white/10">
+              {[
+                ["Faith and family first.", "The business serves them. Never the other way around."],
+                ["The Legacy Fund.", "10% of top-line revenue given to causes that serve people and the planet."],
+                ["One step at a time.", "One dollar, one idea, one founder set free at a time."],
+              ].map(([t, b], i) => (
+                <li key={t} className="grid grid-cols-[3rem_1fr] py-6">
+                  <span className="text-xs text-purple">0{i + 1}</span>
+                  <div>
+                    <h3 className="text-xl">{t}</h3>
+                    <p className="mt-2 text-sm text-white/65">{b}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <Button href="/legacy">The legacy vision</Button>
+              <Button href={LINKS.legacyFund} variant="light">Join Legacy</Button>
             </div>
           </div>
-          <PhotoSlot label="Family moment" className="aspect-[4/3] w-full" />
-        </div>
-      </Section>
-
-      {/* Newsletter */}
-      <Section>
-        <div className="mx-auto max-w-2xl text-center">
-          <Eyebrow>Weekly</Eyebrow>
-          <h2 className="text-3xl md:text-4xl">Clarity in your inbox.</h2>
-          <p className="mt-4 text-muted">
-            One short note a week on faith, family, freedom and building systems that give you time back.
-          </p>
-          <div className="mt-8 flex justify-center">
-            <NewsletterForm />
-          </div>
-          <p className="mt-6 text-sm text-muted">
-            Prefer video? Watch{" "}
-            <a href={LINKS.facebook} target="_blank" rel="noopener noreferrer" className="text-purple hover:underline">
-              The Freedom Project
-            </a>
-            .
-          </p>
-        </div>
-      </Section>
-
-      {/* Close */}
-      <Section tone="dark" className="text-center">
-        <h2 className="mx-auto max-w-2xl text-3xl md:text-5xl">Ready to build on purpose?</h2>
-        <p className="mx-auto mt-5 max-w-xl">Apply to work with me. If it is a fit, we will map your path from Operator to Architect.</p>
-        <div className="mt-8 flex justify-center">
-          <Button href="/work-with-jesse">Work with Jesse</Button>
         </div>
       </Section>
     </>
+  );
+}
+
+function BentoCard({
+  path,
+  tone,
+  title,
+  className = "",
+}: {
+  path: (typeof PATHS)[number];
+  tone: "light" | "dark";
+  title: string;
+  className?: string;
+}) {
+  const dark = tone === "dark";
+  return (
+    <div
+      className={`flex min-h-[22rem] flex-col justify-between p-8 md:p-10 ${
+        dark ? "bg-charcoal text-white/70" : "bg-sand text-muted"
+      } ${className}`}
+    >
+      <p className={`text-2xl font-semibold ${dark ? "text-white" : "text-charcoal"}`}>{path.name}</p>
+      <div>
+        <p className={`mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] ${dark ? "text-white/50" : "text-muted"}`}>
+          {path.for}
+        </p>
+        <h3 className={`text-3xl ${dark ? "text-white" : ""}`}>{title}</h3>
+        <p className="mt-3 max-w-md text-sm leading-relaxed">{path.body}</p>
+        <div className="mt-7">
+          <Button href={path.href} variant={dark ? "light" : "primary"}>
+            {path.cta}
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 }

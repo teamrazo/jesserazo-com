@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import "@fontsource-variable/fraunces";
+import "@fontsource/anton";
 import "@fontsource-variable/inter";
 import "./globals.css";
 import Header from "@/components/Header";

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Button, Container, Eyebrow, PhotoSlot, Section } from "@/components/ui";
+import { Button, Eyebrow, PageHero, PhotoSlot, Section } from "@/components/ui";
 import { VALUES } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -39,23 +39,19 @@ const CHAPTERS = [
 export default function About() {
   return (
     <>
-      <section className="bg-ivory pb-12 pt-16 md:pt-24">
-        <Container className="max-w-3xl">
-          <Eyebrow>My story</Eyebrow>
-          <h1 className="text-4xl leading-tight md:text-6xl">From Operator to Architect.</h1>
-          <p className="mt-6 text-lg leading-relaxed text-muted">
-            I am Jesse Razo, founder of RazoRSharp Networks. I help faith-driven founders get their time back and build
-            businesses that serve what matters most.
-          </p>
-        </Container>
-      </section>
+      <PageHero
+        eyebrow="My story"
+        title="From Operator"
+        accent="to Architect."
+        body="I am Jesse Razo, founder of RazoRSharp Networks. I help faith-driven founders get their time back and build businesses that serve what matters most."
+      />
 
       {CHAPTERS.map((c, i) => (
         <Section key={c.title} tone={i % 2 ? "sand" : "light"}>
           <div className={`grid items-center gap-12 md:grid-cols-2 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}>
             <div>
               <Eyebrow>{c.eyebrow}</Eyebrow>
-              <h2 className="text-3xl md:text-4xl">{c.title}</h2>
+              <h2 className="text-5xl md:text-7xl">{c.title}</h2>
               {c.body.map((p) => (
                 <p key={p} className="mt-4 leading-relaxed text-muted">{p}</p>
               ))}
@@ -67,8 +63,8 @@ export default function About() {
 
       <Section tone="dark">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-gold">Faith</p>
-          <h2 className="text-3xl md:text-4xl">The foundation under everything.</h2>
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-purple">Faith</p>
+          <h2 className="text-5xl md:text-7xl">The foundation under everything.</h2>
           {/* DRAFT: replace with Jesse's faith statement in his own words. */}
           <p className="mt-6 text-lg leading-relaxed">
             I believe God gave us our time, our families and our gifts to steward well. My work is one way I try to honor
@@ -81,7 +77,7 @@ export default function About() {
         <div className="grid gap-12 md:grid-cols-2">
           <div>
             <Eyebrow>Family</Eyebrow>
-            <h2 className="text-3xl md:text-4xl">The reason I build.</h2>
+            <h2 className="text-5xl md:text-7xl">The reason I build.</h2>
             <p className="mt-4 leading-relaxed text-muted">
               My family is the measure of whether the business is working. If it costs them, it is not success.
             </p>
@@ -95,7 +91,7 @@ export default function About() {
 
       <Section tone="sand">
         <Eyebrow>Core values</Eyebrow>
-        <h2 className="text-3xl md:text-4xl">How we work.</h2>
+        <h2 className="text-5xl md:text-7xl">How we work.</h2>
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
           {VALUES.map((v) => (
             <div key={v.name} className="rounded-2xl bg-white p-5">
@@ -107,7 +103,7 @@ export default function About() {
       </Section>
 
       <Section className="text-center">
-        <h2 className="text-3xl md:text-4xl">Your turn.</h2>
+        <h2 className="text-5xl md:text-7xl">Your turn.</h2>
         <p className="mx-auto mt-4 max-w-xl text-muted">If you are ready to step out of the Operator seat, let us talk.</p>
         <div className="mt-8">
           <Button href="/work-with-jesse">Work with Jesse</Button>
