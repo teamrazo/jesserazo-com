@@ -9,7 +9,7 @@ export default function Home() {
       {/* Hero: full dark, photo right, stat bar inline */}
       <section className="relative overflow-hidden bg-charcoal">
         <PhotoSlot label="Jesse Razo" photo="hero.jpg" priority dark className="absolute inset-y-0 right-0 hidden w-1/2 items-start pt-24 md:flex" />
-        <div className="absolute inset-0 hidden bg-gradient-to-r from-charcoal via-charcoal/80 to-transparent md:block" aria-hidden="true" />
+        <div className="absolute inset-0 hidden bg-gradient-to-r from-charcoal from-50% to-transparent to-75% md:block" aria-hidden="true" />
         <Container className="relative pb-12 pt-24 md:pt-40">
           <Eyebrow className="text-white/70">Founder. Builder. Faith-driven.</Eyebrow>
           <h1 className="max-w-4xl text-6xl text-white md:text-8xl lg:text-[7.5rem]">
@@ -23,6 +23,7 @@ export default function Home() {
           <div className="mt-10">
             <Button href="/work-with-jesse">Work with Jesse</Button>
           </div>
+          <PhotoSlot label="Jesse Razo" photo="hero.jpg" dark className="mt-12 aspect-[4/5] w-full md:hidden" />
 
           <div className="mt-20 grid grid-cols-2 gap-8 border-t border-white/10 pt-10 md:grid-cols-4">
             {STATS.map((s) => (
