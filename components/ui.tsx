@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
+import { HeadlineLines, Magnetic, Reveal } from "./Motion";
 import type { ReactNode } from "react";
 
 export function Container({ children, className = "" }: { children: ReactNode; className?: string }) {
@@ -26,7 +27,9 @@ export function Section({
   };
   return (
     <section id={id} className={`py-20 md:py-28 ${tones[tone]} ${className}`}>
-      <Container>{children}</Container>
+      <Container>
+        <Reveal>{children}</Reveal>
+      </Container>
     </section>
   );
 }
@@ -41,10 +44,13 @@ export function Button({
   href,
   children,
   variant = "primary",
+  track,
 }: {
   href: string;
   children: ReactNode;
   variant?: "primary" | "ghost" | "light";
+  /** Engagement label, e.g. "hero". Primary buttons always report cta_click. */
+  track?: string;
 }) {
   const base =
     "inline-flex items-center justify-center rounded-full px-7 py-3 text-sm font-semibold transition-colors";
@@ -54,18 +60,17 @@ export function Button({
     light: "border border-white/40 text-white hover:border-gold hover:text-gold",
   };
   const cls = `${base} ${styles[variant]}`;
-  if (href.startsWith("http")) {
-    return (
-      <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>
-        {children}
-      </a>
-    );
-  }
-  return (
-    <Link href={href} className={cls}>
+  const dataTrack = track || variant === "primary" ? `cta_click:${track || String(children)}` : undefined;
+  const el = href.startsWith("http") ? (
+    <a href={href} target="_blank" rel="noopener noreferrer" className={cls} data-track={dataTrack}>
+      {children}
+    </a>
+  ) : (
+    <Link href={href} className={cls} data-track={dataTrack}>
       {children}
     </Link>
   );
+  return variant === "primary" ? <Magnetic>{el}</Magnetic> : el;
 }
 
 // Shows /public/photos/<photo> when the file exists; otherwise a labelled placeholder.
@@ -87,7 +92,7 @@ export function PhotoSlot({
   if (src) {
     return (
       <div className={`${className.includes("absolute") ? "" : "relative "}overflow-hidden ${className}`}>
-        <Image src={src} alt={label} fill priority={priority} sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
+        <Image src={src} alt={label} fill priority={priority} sizes="(min-width: 768px) 50vw, 100vw" className="object-cover transition-transform duration-[1200ms] ease-out hover:scale-[1.04]" />
       </div>
     );
   }
@@ -132,15 +137,10 @@ export function PageHero({
       )}
       <Container className="relative pb-20 pt-20 md:pb-28 md:pt-28">
         <Eyebrow className="text-white/60">{eyebrow}</Eyebrow>
-        <h1 className={`text-5xl text-white md:text-8xl ${photo ? "max-w-2xl" : "max-w-5xl"}`}>
-          {title}
-          {accent && (
-            <>
-              <br />
-              <span className="text-purple">{accent}</span>
-            </>
-          )}
-        </h1>
+        <HeadlineLines
+          className={`text-5xl text-white md:text-8xl ${photo ? "max-w-2xl" : "max-w-5xl"}`}
+          lines={[{ text: title }, ...(accent ? [{ text: accent, accent: true }] : [])]}
+        />
         {body && <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/70">{body}</p>}
         {children && <div className="mt-10">{children}</div>}
         {photo && <PhotoSlot label="Jesse Razo" photo={photo} dark className="mt-12 aspect-[4/5] w-full md:hidden" />}

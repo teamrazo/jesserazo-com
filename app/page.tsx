@@ -1,4 +1,6 @@
 import { Button, Container, Eyebrow, PhotoSlot, Section } from "@/components/ui";
+import { HeadlineLines, RevealGroup, RevealItem } from "@/components/Motion";
+import { ScrollStory, TimeBackStepper, type Chapter } from "@/components/ScrollStory";
 import { LINKS, PATHS, STATS, TIMEBACK } from "@/lib/site";
 
 export default function Home() {
@@ -12,16 +14,15 @@ export default function Home() {
         <div className="absolute inset-0 hidden bg-gradient-to-r from-charcoal from-50% to-transparent to-75% md:block" aria-hidden="true" />
         <Container className="relative pb-12 pt-24 md:pt-40">
           <Eyebrow className="text-white/70">Founder. Builder. Faith-driven.</Eyebrow>
-          <h1 className="max-w-4xl text-6xl text-white md:text-8xl lg:text-[7.5rem]">
-            Faith first.
-            <br />
-            <span className="text-purple">Freedom by design.</span>
-          </h1>
+          <HeadlineLines
+            className="max-w-4xl text-6xl text-white md:text-8xl lg:text-[7.5rem]"
+            lines={[{ text: "Faith first." }, { text: "Freedom by design.", accent: true }]}
+          />
           <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/75">
             Build a business that serves your faith, your family and your future. Stop operating. Start architecting.
           </p>
           <div className="mt-10">
-            <Button href="/work-with-jesse">Work with Jesse</Button>
+            <Button href="/work-with-jesse" track="hero">Work with Jesse</Button>
           </div>
           <PhotoSlot label="Jesse Razo" photo="hero.jpg" dark className="mt-12 aspect-[4/5] w-full md:hidden" />
 
@@ -53,43 +54,18 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="mt-14 grid gap-5 md:grid-cols-3">
-          <BentoCard path={challenge} tone="light" className="md:col-span-2" title="Get close. Stay close." />
-          <BentoCard path={audit} tone="dark" title="Find your time leaks." />
-          <BentoCard path={lever} tone="dark" title="Run on systems." />
-          <BentoCard path={partner} tone="dark" className="md:col-span-2" title="Earn, learn and grow." />
-        </div>
+        <RevealGroup className="mt-14 grid gap-5 md:grid-cols-3">
+          <RevealItem className="md:col-span-2"><BentoCard path={challenge} tone="light" title="Get close. Stay close." /></RevealItem>
+          <RevealItem><BentoCard path={audit} tone="dark" title="Find your time leaks." /></RevealItem>
+          <RevealItem><BentoCard path={lever} tone="dark" title="Run on systems." /></RevealItem>
+          <RevealItem className="md:col-span-2"><BentoCard path={partner} tone="dark" title="Earn, learn and grow." /></RevealItem>
+        </RevealGroup>
       </Section>
 
-      {/* Story */}
-      <Section tone="sand">
-        <div className="grid items-center gap-12 md:grid-cols-2 md:gap-20">
-          <PhotoSlot label="Jesse at work" photo="story.jpg" className="aspect-[4/5] w-full" />
-          <div>
-            <Eyebrow>My story</Eyebrow>
-            <h2 className="text-6xl md:text-8xl">
-              From Operator
-              <br />
-              to Architect.
-            </h2>
-            <p className="mt-8 leading-relaxed text-muted">
-              I spent years as the Operator. Every decision, every fire and every late night ran through me. The
-              business grew, and it took more than it gave.
-            </p>
-            <p className="mt-4 leading-relaxed text-muted">
-              <strong className="text-charcoal">Order changed everything.</strong> Faith first. Family second. Then a
-              business built on systems instead of on me.
-            </p>
-            <p className="mt-4 leading-relaxed text-muted">
-              Now I help faith-driven founders do the same. Clear direction, the right systems and{" "}
-              <strong className="text-charcoal">time back for what matters most.</strong>
-            </p>
-            <div className="mt-10">
-              <Button href="/about">Read my story</Button>
-            </div>
-          </div>
-        </div>
-      </Section>
+      {/* Story: pinned scroll sequence on desktop, stacked on mobile */}
+      <section className="bg-sand">
+        <ScrollStory chapters={STORY} ctaHref="/about" />
+      </section>
 
       {/* TimeBACK System */}
       <Section>
@@ -106,17 +82,9 @@ export default function Home() {
             AI scales whatever you already have. Direction comes first, then speed. Four steps, reviewed every 90 days.
           </p>
         </div>
-        <ol className="mt-14 grid gap-px overflow-hidden bg-charcoal/10 md:grid-cols-4">
-          {TIMEBACK.map((t, i) => (
-            <li key={t.step} className="bg-ivory p-8">
-              <p className="text-xs font-semibold text-purple">0{i + 1}</p>
-              <h3 className="mt-3 text-2xl">{t.step}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted">{t.body}</p>
-            </li>
-          ))}
-        </ol>
+        <TimeBackStepper steps={TIMEBACK} />
         <div className="mt-10">
-          <Button href={LINKS.timeback} variant="ghost">Start with a TimeBACK Audit</Button>
+          <Button href={LINKS.timeback} variant="ghost" track="timeback_section">Start with a TimeBACK Audit</Button>
         </div>
       </Section>
 
@@ -150,7 +118,7 @@ export default function Home() {
               ))}
             </ol>
             <div className="mt-10 flex flex-wrap gap-4">
-              <Button href="/legacy">The legacy vision</Button>
+              <Button href="/legacy" track="legacy_section">The legacy vision</Button>
               <Button href={LINKS.legacyFund} variant="light">Join Legacy</Button>
             </div>
           </div>
@@ -164,19 +132,17 @@ function BentoCard({
   path,
   tone,
   title,
-  className = "",
 }: {
   path: (typeof PATHS)[number];
   tone: "light" | "dark";
   title: string;
-  className?: string;
 }) {
   const dark = tone === "dark";
   return (
     <div
-      className={`flex min-h-[22rem] flex-col justify-between p-8 md:p-10 ${
+      className={`flex h-full min-h-[22rem] flex-col justify-between p-8 md:p-10 ${
         dark ? "bg-charcoal text-white/70" : "bg-sand text-muted"
-      } ${className}`}
+      }`}
     >
       <p className={`text-2xl font-semibold ${dark ? "text-white" : "text-charcoal"}`}>{path.name}</p>
       <div>
@@ -186,7 +152,7 @@ function BentoCard({
         <h3 className={`text-3xl ${dark ? "text-white" : ""}`}>{title}</h3>
         <p className="mt-3 max-w-md text-sm leading-relaxed">{path.body}</p>
         <div className="mt-7">
-          <Button href={path.href} variant={dark ? "light" : "primary"}>
+          <Button href={path.href} variant={dark ? "light" : "primary"} track={`path - ${path.name}`}>
             {path.cta}
           </Button>
         </div>
@@ -194,3 +160,27 @@ function BentoCard({
     </div>
   );
 }
+
+const STORY: Chapter[] = [
+  {
+    eyebrow: "The Operator",
+    title: "Everything ran through me.",
+    body: "Every decision, every fire and every late night ran through me. The business grew, and it took more than it gave.",
+    photo: "story-operator.jpg",
+    alt: "Jesse on the road between meetings",
+  },
+  {
+    eyebrow: "The turning point",
+    title: "Order changed everything.",
+    body: "Faith first. Family second. Then a business built on systems instead of on me.",
+    photo: "story.jpg",
+    alt: "Jesse climbing a granite boulder",
+  },
+  {
+    eyebrow: "The Architect",
+    title: "Building on purpose.",
+    body: "Now I help faith-driven founders do the same. Clear direction, the right systems and time back for what matters most.",
+    photo: "about-architect.jpg",
+    alt: "Jesse on a summit overlooking the valley",
+  },
+];

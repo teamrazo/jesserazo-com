@@ -54,3 +54,13 @@ Every form sends first-touch and last-touch attribution as a HighLevel note.
 
 ## Deploy
 Push or merge to `main`. Vercel builds automatically. Do not deploy from Vercel directly.
+
+## Engagement (motion and tracking)
+- Motion: `components/Motion.tsx` (reveals, magnetic CTA, hero line reveal) and `components/ScrollStory.tsx` (pinned Operator to Architect story, TimeBACK stepper). All animation is transform and opacity only, and honours the visitor's reduce-motion setting.
+- Events (Vercel Web Analytics custom events + `window.dataLayer`):
+  - `cta_click` (label: hero, header, story, section name, or path name)
+  - `application_start`, `application_submit` (revenue band), `application_error`
+  - `freedom_signup`
+  - `story_complete`, `timeback_complete`
+  - `scroll_depth` (50, 90)
+- Vercel Web Analytics and Speed Insights must be enabled on the project for events to show in the dashboard.

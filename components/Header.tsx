@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { NAV } from "@/lib/site";
 import { Container } from "./ui";
+import { Magnetic } from "./Motion";
 
 export default function Header() {
   return (
@@ -16,12 +17,15 @@ export default function Header() {
               {item.label}
             </Link>
           ))}
-          <Link
-            href="/work-with-jesse"
-            className="rounded-full bg-purple px-5 py-2 text-sm font-semibold text-white hover:bg-purple-deep"
-          >
-            Work with Jesse
-          </Link>
+          <Magnetic>
+            <Link
+              href="/work-with-jesse"
+              data-track="cta_click:header"
+              className="inline-block rounded-full bg-purple px-5 py-2 text-sm font-semibold text-white hover:bg-purple-deep"
+            >
+              Work with Jesse
+            </Link>
+          </Magnetic>
         </nav>
 
         <details className="relative md:hidden">

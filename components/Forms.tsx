@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { readAttribution } from "./ClientBits";
+import { track } from "@/lib/track";
 
 type Status = "idle" | "sending" | "done" | "error";
 
@@ -22,17 +23,27 @@ const label = "mb-1.5 block text-sm font-medium text-charcoal";
 export function ApplicationForm({ calendarUrl }: { calendarUrl?: string }) {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
+  const [started, setStarted] = useState(false);
+
+  function onFocus() {
+    if (started) return;
+    setStarted(true);
+    track("application_start");
+  }
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("sending");
     setError("");
+    const revenue = String(new FormData(e.currentTarget).get("revenue") || "");
     try {
       await post("/api/apply", e.currentTarget);
       setStatus("done");
+      track("application_submit", { revenue });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
       setStatus("error");
+      track("application_error");
     }
   }
 
@@ -53,7 +64,7 @@ export function ApplicationForm({ calendarUrl }: { calendarUrl?: string }) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="grid gap-5 rounded-2xl border border-charcoal/10 bg-white p-6 md:grid-cols-2 md:p-8">
+    <form onSubmit={onSubmit} onFocusCapture={onFocus} className="grid gap-5 rounded-2xl border border-charcoal/10 bg-white p-6 md:grid-cols-2 md:p-8">
       <div>
         <label className={label} htmlFor="firstName">First name</label>
         <input id="firstName" name="firstName" required autoComplete="given-name" className={field} />
@@ -121,6 +132,7 @@ export function NewsletterForm({ dark = false }: { dark?: boolean }) {
     try {
       await post("/api/subscribe", e.currentTarget);
       setStatus("done");
+      track("freedom_signup");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Please try again.");
       setStatus("error");
