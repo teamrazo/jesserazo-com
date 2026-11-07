@@ -37,7 +37,7 @@ export async function POST(req: Request) {
       await sendEmail(id, {
         subject: "You're on the list: FREEDOM Project",
         html: `<p>Hi ${safe},</p><p>You're on the list. We'll keep you in the loop as the FREEDOM Project develops.</p><p>Jesse &amp; the RazoRSharp team</p>`,
-        emailFrom: "jesse@razorsharpnetworks.com",
+        emailFrom: "jrazo@razorsharpnetworks.com",
         emailFromName: "Jesse Razo · FREEDOM Project",
       }).catch((e) => console.error("confirmation email failed", e));
     }
