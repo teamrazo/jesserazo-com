@@ -17,11 +17,26 @@ Copy and links live in `lib/site.ts` and in each page file. Items marked `DRAFT`
 - Stat bar numbers (`STATS` in `lib/site.ts`, currently TBD)
 - Story beats for `/about` chapters
 - Faith statement (`/about`) and legacy vision (`/legacy`) in Jesse's words
-- Photos to replace `PhotoSlot` placeholders
-- God's OS Challenge URL (`LINKS.godsOS`)
+- Proximity Challenge URL (`LINKS.proximity`)
 - Freedom Project video link (currently Facebook page)
 - HighLevel tag names for applications and newsletter (tags need Jesse's OK)
 - Calendar URL for post-application booking
+
+## Photos
+Drop files into `public/photos/` with these names. Each slot shows a placeholder until its file exists.
+
+| File | Where it shows | Shape |
+| --- | --- | --- |
+| hero.jpg | Home hero, right half | Tall portrait, subject on the right |
+| story.jpg | Home "From Operator to Architect" | Portrait 4:5 |
+| legacy.jpg | Home Legacy section | Portrait 4:5 |
+| about-operator.jpg | My Story chapter 1 | Landscape 4:3 |
+| about-turning-point.jpg | My Story chapter 2 | Landscape 4:3 |
+| about-architect.jpg | My Story chapter 3 | Landscape 4:3 |
+| family-1.jpg, family-2.jpg | My Story family (no names) | Square |
+| legacy-fund.jpg | Legacy page | Landscape 4:3 |
+
+Use JPGs about 2000px on the long side. Next.js resizes and compresses them on delivery.
 
 ## Environment (Vercel)
 See `.env.example`.
@@ -33,7 +48,7 @@ Every form sends first-touch and last-touch attribution as a HighLevel note.
 
 ## Shared RSN standards
 - Footer matches portal.gitlever.ai
-- Partner bar loads from partner.razorsharpnetworks.com/embed/partner-bar.js
+- Partner bar removed at Jesse's request (2026-11-07)
 - Back-to-top button
 - Support/Recommend drawers: not yet ported
 

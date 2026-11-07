@@ -1,4 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import type { ReactNode } from "react";
 
 export function Container({ children, className = "" }: { children: ReactNode; className?: string }) {
@@ -65,8 +68,29 @@ export function Button({
   );
 }
 
-// Placeholder until real photos arrive. Labelled so nobody mistakes it for final art.
-export function PhotoSlot({ label, className = "", dark = false }: { label: string; className?: string; dark?: boolean }) {
+// Shows /public/photos/<photo> when the file exists; otherwise a labelled placeholder.
+// To add a photo: drop the file into public/photos with the name listed in README.
+export function PhotoSlot({
+  label,
+  photo,
+  className = "",
+  dark = false,
+  priority = false,
+}: {
+  label: string;
+  photo?: string;
+  className?: string;
+  dark?: boolean;
+  priority?: boolean;
+}) {
+  const src = photo && existsSync(join(process.cwd(), "public", "photos", photo)) ? `/photos/${photo}` : null;
+  if (src) {
+    return (
+      <div className={`${className.includes("absolute") ? "" : "relative "}overflow-hidden ${className}`}>
+        <Image src={src} alt={label} fill priority={priority} sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
+      </div>
+    );
+  }
   return (
     <div
       role="img"

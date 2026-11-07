@@ -16,7 +16,7 @@ const COLUMNS: { title: string; links: [string, string][] }[] = [
   {
     title: "Programs",
     links: [
-      [LINKS.godsOS, "God's OS Challenge"],
+      [LINKS.proximity, "Proximity Challenge"],
       [LINKS.timeback, "TimeBACK Audit"],
       [LINKS.lever, "LEVER AI"],
       [LINKS.partner, "Partner Program"],

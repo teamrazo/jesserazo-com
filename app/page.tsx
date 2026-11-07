@@ -8,7 +8,7 @@ export default function Home() {
     <>
       {/* Hero: full dark, photo right, stat bar inline */}
       <section className="relative overflow-hidden bg-charcoal">
-        <PhotoSlot label="Jesse hero portrait" dark className="absolute inset-y-0 right-0 hidden w-1/2 items-start pt-24 md:flex" />
+        <PhotoSlot label="Jesse Razo" photo="hero.jpg" priority dark className="absolute inset-y-0 right-0 hidden w-1/2 items-start pt-24 md:flex" />
         <div className="absolute inset-0 hidden bg-gradient-to-r from-charcoal via-charcoal/80 to-transparent md:block" aria-hidden="true" />
         <Container className="relative pb-12 pt-24 md:pt-40">
           <Eyebrow className="text-white/70">Founder. Builder. Faith-driven.</Eyebrow>
@@ -53,7 +53,7 @@ export default function Home() {
         </div>
 
         <div className="mt-14 grid gap-5 md:grid-cols-3">
-          <BentoCard path={challenge} tone="light" className="md:col-span-2" title="Put first things first." />
+          <BentoCard path={challenge} tone="light" className="md:col-span-2" title="Get close. Stay close." />
           <BentoCard path={audit} tone="dark" title="Find your time leaks." />
           <BentoCard path={lever} tone="dark" title="Run on systems." />
           <BentoCard path={partner} tone="dark" className="md:col-span-2" title="Earn, learn and grow." />
@@ -63,7 +63,7 @@ export default function Home() {
       {/* Story */}
       <Section tone="sand">
         <div className="grid items-center gap-12 md:grid-cols-2 md:gap-20">
-          <PhotoSlot label="Jesse at work" className="aspect-[4/5] w-full" />
+          <PhotoSlot label="Jesse at work" photo="story.jpg" className="aspect-[4/5] w-full" />
           <div>
             <Eyebrow>My story</Eyebrow>
             <h2 className="text-6xl md:text-8xl">
@@ -128,7 +128,7 @@ export default function Home() {
           <span className="text-purple">outlasts you.</span>
         </h2>
         <div className="mt-14 grid gap-12 md:grid-cols-2">
-          <PhotoSlot label="Family moment" dark className="aspect-[4/5] w-full" />
+          <PhotoSlot label="Family moment" photo="legacy.jpg" dark className="aspect-[4/5] w-full" />
           <div>
             <p className="text-lg leading-relaxed">
               Legacy is not what you leave behind. It is what you build into people while you are here.

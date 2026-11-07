@@ -43,7 +43,7 @@ const FAQ = [
   },
   {
     q: "What if I am not ready to apply?",
-    a: "Start with the God's Operating System Challenge or a TimeBACK Audit. Both are linked below.",
+    a: "Start with the Proximity Challenge or a TimeBACK Audit. Both are linked below.",
   },
 ];
 

@@ -18,8 +18,8 @@ export const LINKS = {
   partner: "https://partner.razorsharpnetworks.com",
   legacyFund: "https://www.razorsharpnetworks.com/legacy-fund-build-a-lasting-legacy/",
   facebook: "https://facebook.com/getyourtimeback",
-  // DRAFT: God's OS Challenge page not confirmed yet. Routes to the application until it is.
-  godsOS: "/work-with-jesse#apply",
+  // DRAFT: Proximity Challenge page URL not confirmed yet. Routes to the application until it is.
+  proximity: "/work-with-jesse#apply",
 };
 
 export const NAV = [
@@ -61,10 +61,10 @@ export const PILLARS = [
 
 export const PATHS = [
   {
-    name: "God's Operating System Challenge",
-    for: "Start here if your priorities feel out of order.",
-    body: "Reset the foundation first. Faith, family and business in the right sequence.",
-    href: LINKS.godsOS,
+    name: "Proximity Challenge",
+    for: "Start here if God feels distant.",
+    body: "Get close to God and stay close. Everything else is built on that foundation.",
+    href: LINKS.proximity,
     cta: "Join the Challenge",
   },
   {

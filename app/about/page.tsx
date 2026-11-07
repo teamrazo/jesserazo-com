@@ -12,6 +12,7 @@ export const metadata: Metadata = {
 const CHAPTERS = [
   {
     eyebrow: "The Operator",
+    photo: "about-operator.jpg",
     title: "Everything ran through me.",
     body: [
       "Like most founders, I built the business by doing everything myself. Sales, delivery, systems and every fire in between.",
@@ -20,6 +21,7 @@ const CHAPTERS = [
   },
   {
     eyebrow: "The turning point",
+    photo: "about-turning-point.jpg",
     title: "Order before speed.",
     body: [
       "I had to get honest about what came first. Faith. Then family. Then the business that is meant to serve them both.",
@@ -28,6 +30,7 @@ const CHAPTERS = [
   },
   {
     eyebrow: "The Architect",
+    photo: "about-architect.jpg",
     title: "Building on purpose.",
     body: [
       "Today I design systems instead of carrying them. AI and automation handle the repeatable work, so people can do the meaningful work.",
@@ -56,7 +59,7 @@ export default function About() {
                 <p key={p} className="mt-4 leading-relaxed text-muted">{p}</p>
               ))}
             </div>
-            <PhotoSlot label={c.eyebrow} className="aspect-[4/3] w-full" />
+            <PhotoSlot label={c.eyebrow} photo={c.photo} className="aspect-[4/3] w-full" />
           </div>
         </Section>
       ))}
@@ -83,8 +86,8 @@ export default function About() {
             </p>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <PhotoSlot label="Family 1" className="aspect-square" />
-            <PhotoSlot label="Family 2" className="aspect-square" />
+            <PhotoSlot label="Family" photo="family-1.jpg" className="aspect-square" />
+            <PhotoSlot label="Family" photo="family-2.jpg" className="aspect-square" />
           </div>
         </div>
       </Section>

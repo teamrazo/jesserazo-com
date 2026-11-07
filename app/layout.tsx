@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import "@fontsource/anton";
 import "@fontsource-variable/inter";
 import "./globals.css";
@@ -51,8 +50,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd).replace(/</g, "\\u003c") }}
         />
-        {/* Shared RSN Partner Program bar ("Give $100, Get $100") */}
-        <Script src="https://partner.razorsharpnetworks.com/embed/partner-bar.js" data-site="jesserazo.com" strategy="lazyOnload" />
       </body>
     </html>
   );

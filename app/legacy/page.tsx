@@ -52,7 +52,7 @@ export default function Legacy() {
               <Button href="/work-with-jesse" variant="ghost">Work with Jesse</Button>
             </div>
           </div>
-          <PhotoSlot label="Legacy" className="aspect-[4/3] w-full" />
+          <PhotoSlot label="Legacy" photo="legacy-fund.jpg" className="aspect-[4/3] w-full" />
         </div>
       </Section>
 
