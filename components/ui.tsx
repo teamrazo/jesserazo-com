@@ -106,13 +106,33 @@ export function PhotoSlot({
   );
 }
 
-// Dark page header used on inner pages.
-export function PageHero({ eyebrow, title, accent, body, children }: { eyebrow: string; title: string; accent?: string; body?: string; children?: ReactNode }) {
+// Dark page header used on inner pages. With a photo it matches the home hero.
+export function PageHero({
+  eyebrow,
+  title,
+  accent,
+  body,
+  photo,
+  children,
+}: {
+  eyebrow: string;
+  title: string;
+  accent?: string;
+  body?: string;
+  photo?: string;
+  children?: ReactNode;
+}) {
   return (
-    <section className="bg-charcoal pb-20 pt-20 md:pb-28 md:pt-28">
-      <Container>
+    <section className="relative overflow-hidden bg-charcoal">
+      {photo && (
+        <>
+          <PhotoSlot label="Jesse Razo" photo={photo} priority dark className="absolute inset-y-0 right-0 hidden w-1/2 md:flex" />
+          <div className="absolute inset-0 hidden bg-gradient-to-r from-charcoal from-50% to-transparent to-75% md:block" aria-hidden="true" />
+        </>
+      )}
+      <Container className="relative pb-20 pt-20 md:pb-28 md:pt-28">
         <Eyebrow className="text-white/60">{eyebrow}</Eyebrow>
-        <h1 className="max-w-5xl text-5xl text-white md:text-8xl">
+        <h1 className={`text-5xl text-white md:text-8xl ${photo ? "max-w-2xl" : "max-w-5xl"}`}>
           {title}
           {accent && (
             <>
@@ -121,8 +141,9 @@ export function PageHero({ eyebrow, title, accent, body, children }: { eyebrow: 
             </>
           )}
         </h1>
-        {body && <p className="mt-8 max-w-2xl text-lg leading-relaxed text-white/70">{body}</p>}
+        {body && <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/70">{body}</p>}
         {children && <div className="mt-10">{children}</div>}
+        {photo && <PhotoSlot label="Jesse Razo" photo={photo} dark className="mt-12 aspect-[4/5] w-full md:hidden" />}
       </Container>
     </section>
   );

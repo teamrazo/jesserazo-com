@@ -13,6 +13,7 @@ export default function Legacy() {
     <>
       <PageHero
         eyebrow="Legacy"
+        photo="legacy-hero.jpg"
         title="Build what"
         accent="outlasts you."
         body="Legacy is not a number in an account. It is the faith you pass on, the family you show up for and the people who are better because you were here. The business is just the vehicle."
@@ -25,7 +26,7 @@ export default function Legacy() {
           {PILLARS.map((p, i) => (
             <div
               key={p.name}
-              className={`rounded-2xl p-6 ${i === 3 ? "bg-charcoal text-white/80 [&_h3]:text-white" : "border border-charcoal/10 bg-white"}`}
+              className={`p-6 ${i === 3 ? "bg-charcoal text-white/80 [&_h3]:text-white" : "border border-charcoal/10 bg-white"}`}
             >
               <h3 className="text-2xl">{p.name}</h3>
               <p className={`mt-3 text-sm leading-relaxed ${i === 3 ? "" : "text-muted"}`}>{p.body}</p>

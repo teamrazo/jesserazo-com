@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Button, Eyebrow, PageHero, Section } from "@/components/ui";
+import { Button, Eyebrow, PageHero, PhotoSlot, Section } from "@/components/ui";
 import { ApplicationForm } from "@/components/Forms";
 import { PATHS } from "@/lib/site";
 
@@ -53,6 +53,7 @@ export default function WorkWithJesse() {
     <>
       <PageHero
         eyebrow="Work with Jesse"
+        photo="work-hero.jpg"
         title="Build the business"
         accent="on purpose."
         body="I work with a small number of faith-driven founders at a time. If you are ready to stop operating and start architecting, apply below."
@@ -62,7 +63,7 @@ export default function WorkWithJesse() {
 
       <Section tone="sand">
         <div className="grid gap-10 md:grid-cols-2">
-          <div className="rounded-2xl bg-white p-8">
+          <div className="bg-white p-8">
             <h2 className="text-2xl">This is for you if</h2>
             <ul className="mt-5 space-y-3">
               {FOR.map((f) => (
@@ -73,7 +74,7 @@ export default function WorkWithJesse() {
               ))}
             </ul>
           </div>
-          <div className="rounded-2xl border border-charcoal/10 p-8">
+          <div className="border border-charcoal/10 p-8">
             <h2 className="text-2xl">This is not for you if</h2>
             <ul className="mt-5 space-y-3">
               {NOT_FOR.map((f) => (
@@ -92,7 +93,7 @@ export default function WorkWithJesse() {
         <h2 className="text-5xl md:text-7xl">Three simple steps.</h2>
         <ol className="mt-10 grid gap-6 md:grid-cols-3">
           {STEPS.map((s, i) => (
-            <li key={s.name} className="rounded-2xl border border-charcoal/10 bg-white p-7">
+            <li key={s.name} className="border border-charcoal/10 bg-white p-7">
               <p className="text-xs font-semibold text-purple">Step {i + 1}</p>
               <h3 className="mt-2 text-2xl">{s.name}</h3>
               <p className="mt-2 text-muted">{s.body}</p>
@@ -102,10 +103,16 @@ export default function WorkWithJesse() {
       </Section>
 
       <Section id="apply" tone="sand">
-        <div className="mx-auto max-w-3xl">
-          <Eyebrow>Application</Eyebrow>
-          <h2 className="text-5xl md:text-7xl">Tell me about your business.</h2>
-          <p className="mb-8 mt-4 text-muted">Honest answers help us make the most of your call.</p>
+        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+          <div>
+            <Eyebrow>Application</Eyebrow>
+            <h2 className="text-5xl md:text-7xl">Tell me about your business.</h2>
+            <p className="mt-6 leading-relaxed text-muted">
+              Honest answers help us make the most of your call. I read every application, and if it is a fit we will
+              map your path from Operator to Architect together.
+            </p>
+            <PhotoSlot label="Jesse Razo" photo="work-apply.jpg" className="mt-10 hidden aspect-[4/3] w-full lg:flex" />
+          </div>
           <ApplicationForm calendarUrl={calendarUrl} />
         </div>
       </Section>

@@ -41,7 +41,7 @@ Use JPGs about 2000px on the long side. Next.js resizes and compresses them on d
 ## Environment (Vercel)
 See `.env.example`.
 - `GHL_PRIVATE_TOKEN`, `GHL_LOCATION_ID`: same values as other RSN projects. Without them, forms return `mode: "no-ghl"` and nothing reaches HighLevel.
-- `GHL_APPLY_TAGS`, `GHL_SUBSCRIBE_TAGS`: optional, comma separated.
+- `GHL_APPLY_TAGS`: optional, comma separated. FREEDOM Project signups use the same tags as the gitlever.ai pop-up and send the same confirmation email.
 - `NEXT_PUBLIC_APPLY_CALENDAR_URL`: calendar shown after an application is submitted.
 
 Every form sends first-touch and last-touch attribution as a HighLevel note.

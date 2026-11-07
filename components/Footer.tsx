@@ -58,8 +58,10 @@ export default function Footer() {
       <div className="border-b border-white/10">
         <Container className="flex flex-col gap-6 py-10 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="font-display text-2xl uppercase">The Freedom Letter</p>
-            <p className="mt-1 text-sm text-purple">One short note a week on faith, family, freedom and systems.</p>
+            <p className="font-display text-3xl uppercase">
+              Stay up to date with the <span className="text-purple">FREEDOM Project.</span>
+            </p>
+            <p className="mt-2 text-sm text-white/60">No spam. Unsubscribe any time.</p>
           </div>
           <NewsletterForm dark />
         </Container>
@@ -78,7 +80,7 @@ export default function Footer() {
           </div>
         ))}
         <div>
-          <Image src="/rsn-logo-purple.png" alt="RazoRSharp Networks" width={140} height={28} className="h-7 w-auto" />
+          <Image src="/rsn-logo-purple.png" alt="RazoRSharp Networks" width={140} height={28} className="h-7 w-auto brightness-0 invert" />
           <p className="mt-4 text-sm text-white/60">{SITE.tagline}</p>
           <p className="mt-4 text-sm text-white/60">
             Built using{" "}

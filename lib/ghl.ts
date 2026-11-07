@@ -34,13 +34,19 @@ export function envTags(name: string): string[] {
 }
 
 export async function upsertWithNote(contact: Upsert, note: string) {
-  const body: Record<string, unknown> = { ...contact, locationId: process.env.GHL_LOCATION_ID };
-  if (!contact.tags?.length) delete body.tags;
+  // Tags are added separately so existing tags on the contact are never replaced.
+  const { tags, ...rest } = contact;
+  const body: Record<string, unknown> = { ...rest, locationId: process.env.GHL_LOCATION_ID };
 
   const res = await fetch(`${API}/contacts/upsert`, { method: "POST", headers: headers(), body: JSON.stringify(body) });
   if (!res.ok) throw new Error(`GHL upsert ${res.status}: ${await res.text()}`);
   const json = (await res.json()) as { contact?: { id?: string } };
   const id = json.contact?.id;
+
+  if (id && tags?.length) {
+    const t = await fetch(`${API}/contacts/${id}/tags`, { method: "POST", headers: headers(), body: JSON.stringify({ tags }) });
+    if (!t.ok) console.error("GHL tags failed", t.status, await t.text());
+  }
 
   if (id && note) {
     const n = await fetch(`${API}/contacts/${id}/notes`, {
@@ -70,3 +76,15 @@ export function clean(v: unknown, max = 2000): string {
 }
 
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+export async function sendEmail(
+  contactId: string,
+  msg: { subject: string; html: string; emailFrom: string; emailFromName: string },
+) {
+  const res = await fetch(`${API}/conversations/messages`, {
+    method: "POST",
+    headers: headers(),
+    body: JSON.stringify({ type: "Email", contactId, ...msg }),
+  });
+  if (!res.ok) throw new Error(`GHL email ${res.status}: ${await res.text()}`);
+}

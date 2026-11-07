@@ -44,6 +44,7 @@ export default function About() {
     <>
       <PageHero
         eyebrow="My story"
+        photo="about-hero.jpg"
         title="From Operator"
         accent="to Architect."
         body="I am Jesse Razo, founder of RazoRSharp Networks. I help faith-driven founders get their time back and build businesses that serve what matters most."
@@ -97,7 +98,7 @@ export default function About() {
         <h2 className="text-5xl md:text-7xl">How we work.</h2>
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
           {VALUES.map((v) => (
-            <div key={v.name} className="rounded-2xl bg-white p-5">
+            <div key={v.name} className="bg-white p-5">
               <h3 className="text-lg">{v.name}</h3>
               <p className="mt-2 text-sm text-muted">{v.body}</p>
             </div>

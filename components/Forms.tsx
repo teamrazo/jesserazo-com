@@ -109,37 +109,48 @@ export function ApplicationForm({ calendarUrl }: { calendarUrl?: string }) {
   );
 }
 
+// Same list as the gitlever.ai "FREEDOM Project" pop-up.
 export function NewsletterForm({ dark = false }: { dark?: boolean }) {
   const [status, setStatus] = useState<Status>("idle");
+  const [error, setError] = useState("");
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("sending");
+    setError("");
     try {
       await post("/api/subscribe", e.currentTarget);
       setStatus("done");
-    } catch {
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Please try again.");
       setStatus("error");
     }
   }
 
   if (status === "done") {
-    return <p className={dark ? "text-white" : "text-charcoal"}>You are in. Watch your inbox.</p>;
+    return (
+      <div className={dark ? "text-white" : "text-charcoal"}>
+        <p className="font-semibold">You&apos;re on the list.</p>
+        <p className={`text-sm ${dark ? "text-white/60" : "text-muted"}`}>We&apos;ll keep you in the loop as the FREEDOM Project evolves.</p>
+      </div>
+    );
   }
 
   return (
-    <form onSubmit={onSubmit} className="flex w-full max-w-md flex-col gap-3 sm:flex-row">
+    <form onSubmit={onSubmit} className="flex w-full max-w-xl flex-col gap-3 sm:flex-row sm:flex-wrap">
+      <label htmlFor="nl-first" className="sr-only">First name</label>
+      <input id="nl-first" name="firstName" required placeholder="First name" autoComplete="given-name" className={`${field} sm:w-36`} />
       <label htmlFor="nl-email" className="sr-only">Email</label>
-      <input id="nl-email" name="email" type="email" required placeholder="Your email" autoComplete="email" className={field} />
+      <input id="nl-email" name="email" type="email" required placeholder="you@company.com" autoComplete="email" className={`${field} sm:flex-1`} />
       <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
       <button
         type="submit"
         disabled={status === "sending"}
         className="shrink-0 rounded-full bg-purple px-6 py-3 text-sm font-semibold text-white hover:bg-purple-deep disabled:opacity-60"
       >
-        {status === "sending" ? "Joining..." : "Subscribe"}
+        {status === "sending" ? "Sending..." : "Keep me posted"}
       </button>
-      {status === "error" && <p className="text-sm text-red-400" role="alert">Please try again.</p>}
+      {status === "error" && <p className="w-full text-sm text-red-400" role="alert">{error}</p>}
     </form>
   );
 }

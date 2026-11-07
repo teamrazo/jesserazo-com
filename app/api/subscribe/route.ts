@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import { EMAIL_RE, attributionNote, clean, envTags, ghlConfigured, upsertWithNote } from "@/lib/ghl";
+import { EMAIL_RE, attributionNote, clean, ghlConfigured, sendEmail, upsertWithNote } from "@/lib/ghl";
+
+// Same list and tags as the gitlever.ai "FREEDOM Project" pop-up (gitlever-home/api/lever-waitlist.js).
+const TAGS = ["action - email - subscribe", "action - lever ai project update - subscribed"];
 
 export async function POST(req: Request) {
   let data: Record<string, unknown>;
@@ -11,10 +14,13 @@ export async function POST(req: Request) {
 
   if (clean(data.website)) return NextResponse.json({ ok: true }); // honeypot
 
-  const email = clean(data.email, 200).toLowerCase();
+  const email = clean(data.email, 250).toLowerCase();
+  const nameInput = clean(data.firstName, 200);
+  if (!nameInput || !email) return NextResponse.json({ error: "First name and email are required." }, { status: 400 });
   if (!EMAIL_RE.test(email)) return NextResponse.json({ error: "Please enter a valid email." }, { status: 400 });
 
-  const note = [`Newsletter signup (jesserazo.com)`, `Page: ${clean(data.page, 500)}`, "", attributionNote(data.attribution as never)].join("\n");
+  const [firstName, ...rest] = nameInput.split(/\s+/);
+  const note = ["FREEDOM Project signup (jesserazo.com)", `Page: ${clean(data.page, 500)}`, "", attributionNote(data.attribution as never)].join("\n");
 
   if (!ghlConfigured()) {
     console.warn("GHL not configured; signup logged only", { email });
@@ -22,7 +28,19 @@ export async function POST(req: Request) {
   }
 
   try {
-    await upsertWithNote({ email, tags: envTags("GHL_SUBSCRIBE_TAGS"), source: "jesserazo.com - newsletter" }, note);
+    const id = await upsertWithNote(
+      { firstName, lastName: rest.join(" ") || undefined, email, tags: TAGS, source: "jesserazo.com - FREEDOM Project" },
+      note,
+    );
+    if (id) {
+      const safe = firstName.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
+      await sendEmail(id, {
+        subject: "You're on the list: FREEDOM Project",
+        html: `<p>Hi ${safe},</p><p>You're on the list. We'll keep you in the loop as the FREEDOM Project develops.</p><p>Jesse &amp; the RazoRSharp team</p>`,
+        emailFrom: "jesse@razorsharpnetworks.com",
+        emailFromName: "Jesse Razo · FREEDOM Project",
+      }).catch((e) => console.error("confirmation email failed", e));
+    }
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error(err);
