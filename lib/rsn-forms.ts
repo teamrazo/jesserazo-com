@@ -6,7 +6,9 @@
 //
 // Env:
 //   GHL_PRIVATE_TOKEN, GHL_LOCATION_ID, GHL_VERSION (optional, default 2021-07-28)
-//   SLACK_NOTIFICATION_WEBHOOK or SLACK_WEBHOOK_URL (optional, recommended)
+//   Slack (optional, recommended), either:
+//     SLACK_BOT_TOKEN + SLACK_NOTIFICATION_CHANNEL (default C05Q3RKUQGL, same as gitlever.ai)
+//     SLACK_NOTIFICATION_WEBHOOK or SLACK_WEBHOOK_URL
 
 const GHL = "https://services.leadconnectorhq.com";
 const env = (k: string) => (process.env[k] || "").trim().replace(/\r?\n/g, "");
@@ -139,17 +141,42 @@ export async function sendEmail(c: Cfg, contactId: string, msg: { subject: strin
 }
 
 // ---------- Slack ----------
+const slackBot = () => env("SLACK_BOT_TOKEN") || env("LEVER_SLACK_BOT_TOKEN");
+const slackWebhook = () => env("SLACK_NOTIFICATION_WEBHOOK") || env("SLACK_WEBHOOK_URL");
+
+export function slackConfigured() {
+  return Boolean(slackBot() || slackWebhook());
+}
+
 export async function postSlack(text: string) {
-  const webhook = env("SLACK_NOTIFICATION_WEBHOOK") || env("SLACK_WEBHOOK_URL");
-  if (!webhook) return false;
-  try {
-    const r = await fetch(webhook, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }), signal: timeout(5000) });
-    if (!r.ok) console.warn(JSON.stringify({ event: "slack_webhook_failed", status: r.status }));
-    return r.ok;
-  } catch {
-    console.warn(JSON.stringify({ event: "slack_webhook_error" }));
-    return false;
+  const bot = slackBot();
+  if (bot) {
+    try {
+      const channel = env("SLACK_NOTIFICATION_CHANNEL") || env("LEVER_SLACK_NOTIFICATION_CHANNEL") || "C05Q3RKUQGL";
+      const r = await fetch("https://slack.com/api/chat.postMessage", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${bot}`, "Content-Type": "application/json; charset=utf-8" },
+        body: JSON.stringify({ channel, text }),
+        signal: timeout(5000),
+      });
+      const j = await r.json().catch(() => ({}));
+      if (r.ok && j?.ok) return true;
+      console.warn(JSON.stringify({ event: "slack_bot_failed", status: r.status, error: j?.error }));
+    } catch {
+      console.warn(JSON.stringify({ event: "slack_bot_error" }));
+    }
   }
+  const webhook = slackWebhook();
+  if (webhook) {
+    try {
+      const r = await fetch(webhook, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }), signal: timeout(5000) });
+      if (r.ok) return true;
+      console.warn(JSON.stringify({ event: "slack_webhook_failed", status: r.status }));
+    } catch {
+      console.warn(JSON.stringify({ event: "slack_webhook_error" }));
+    }
+  }
+  return false;
 }
 
 export function leadText(title: string, rows: [string, string | null | undefined][]) {

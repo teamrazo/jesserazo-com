@@ -49,7 +49,8 @@ Both forms post to this site's own endpoint, `app/api/forms/route.ts`, built on 
 Environment variables (Vercel, Production and Preview):
 - `GHL_PRIVATE_TOKEN`, `GHL_LOCATION_ID` (required, same values as the other RSN projects)
 - `GHL_VERSION` (optional, default 2021-07-28)
-- `SLACK_NOTIFICATION_WEBHOOK` (recommended, backup if HighLevel fails)
+- Slack backup (recommended): `SLACK_BOT_TOKEN` (+ optional `SLACK_NOTIFICATION_CHANNEL`, default C05Q3RKUQGL), or `SLACK_NOTIFICATION_WEBHOOK`
+- Setup check: `GET /api/forms` returns whether HighLevel and Slack are configured (true/false only)
 - `NEXT_PUBLIC_APPLY_CALENDAR_URL` (optional, calendar shown after an application)
 
 ## Shared RSN standards

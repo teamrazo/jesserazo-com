@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { guardedJson } from "@/lib/guard";
-import { addNote, attributionNote, ghlConfig, leadText, parseAttribution, postSlack, sendEmail, upsertSafely } from "@/lib/rsn-forms";
+import { addNote, attributionNote, ghlConfig, leadText, parseAttribution, postSlack, sendEmail, slackConfigured, upsertSafely } from "@/lib/rsn-forms";
 
 // POST /api/forms   body.form = "freedom" | "apply"
 //   freedom: FREEDOM Project signup. Same list, tags and confirmation email as the gitlever.ai pop-up.
@@ -14,6 +14,14 @@ const APPLY_TAGS = ["notify:new-lead"];
 
 const str = (v: unknown, n: number) => String(v == null ? "" : v).trim().slice(0, n);
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// GET /api/forms: setup check. Reports only whether each connection is configured, never values.
+export async function GET() {
+  return NextResponse.json(
+    { highlevel: Boolean(ghlConfig()), slack: slackConfigured() },
+    { headers: { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" } },
+  );
+}
 
 export async function POST(req: Request) {
   const parsed = await guardedJson(req);
