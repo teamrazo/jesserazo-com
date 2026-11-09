@@ -137,7 +137,10 @@ export async function sendEmail(c: Cfg, contactId: string, msg: { subject: strin
     signal: timeout(6000),
     body: JSON.stringify({ type: "Email", contactId, ...msg }),
   });
-  if (!r.ok) console.warn(JSON.stringify({ event: "ghl_email_failed", status: r.status }));
+  if (!r.ok) {
+    const detail = (await r.text().catch(() => "")).slice(0, 300);
+    console.warn(JSON.stringify({ event: "ghl_email_failed", status: r.status, detail }));
+  }
 }
 
 // ---------- Slack ----------
