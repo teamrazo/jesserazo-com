@@ -6,9 +6,9 @@ import { track } from "@/lib/track";
 
 type Status = "idle" | "sending" | "done" | "error";
 
-// Forms post to the shared RSN endpoint on gitlever.ai, which holds the HighLevel and Slack
-// connection (safe upsert, first/last-touch attribution fields, Slack fallback, rate limits).
-const FORMS_ENDPOINT = "https://www.gitlever.ai/api/jesserazo-forms";
+// Forms post to this site's own endpoint (app/api/forms), which saves to HighLevel
+// with the RSN smart-form standard and falls back to Slack.
+const FORMS_ENDPOINT = "/api/forms";
 
 type Touch = { url?: string; referrer?: string; utm?: Record<string, string>; at?: string } | null;
 

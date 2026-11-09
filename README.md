@@ -39,12 +39,18 @@ Drop files into `public/photos/` with these names. Each slot shows a placeholder
 Use JPGs about 2000px on the long side. Next.js resizes and compresses them on delivery.
 
 ## Forms and HighLevel
-Both forms post from the browser to `https://www.gitlever.ai/api/jesserazo-forms` (repo teamrazo/gitlever-home).
-That endpoint uses the gitlever-home project's existing HighLevel and Slack connection, so this project needs no secrets.
+Both forms post to this site's own endpoint, `app/api/forms/route.ts`, built on `lib/rsn-forms.ts`
+(the gitlever-home smart-form standard ported to TypeScript).
 - FREEDOM Project signup: tags `action - email - subscribe`, `action - lever ai project update - subscribed`, `notify:new-lead`; confirmation email from jrazo@razorsharpnetworks.com.
 - Work with Jesse application: tag `notify:new-lead`; answers saved as a contact note and posted to Slack.
-- Existing contacts keep their name and email; first/last-touch attribution fields are set; Slack is the fallback if HighLevel fails.
-- Optional env on this project: `NEXT_PUBLIC_APPLY_CALENDAR_URL` (calendar shown after an application).
+- Existing contacts keep their name and email; first/last-touch attribution fields are set; Slack is the fallback.
+- The visitor sees success only if HighLevel or Slack stored the lead. Otherwise the form shows an error.
+
+Environment variables (Vercel, Production and Preview):
+- `GHL_PRIVATE_TOKEN`, `GHL_LOCATION_ID` (required, same values as the other RSN projects)
+- `GHL_VERSION` (optional, default 2021-07-28)
+- `SLACK_NOTIFICATION_WEBHOOK` (recommended, backup if HighLevel fails)
+- `NEXT_PUBLIC_APPLY_CALENDAR_URL` (optional, calendar shown after an application)
 
 ## Shared RSN standards
 - Footer matches portal.gitlever.ai
