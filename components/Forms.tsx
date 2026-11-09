@@ -6,14 +6,46 @@ import { track } from "@/lib/track";
 
 type Status = "idle" | "sending" | "done" | "error";
 
-async function post(url: string, form: HTMLFormElement) {
-  const data = Object.fromEntries(new FormData(form).entries());
-  const res = await fetch(url, {
+// Forms post to the shared RSN endpoint on gitlever.ai, which holds the HighLevel and Slack
+// connection (safe upsert, first/last-touch attribution fields, Slack fallback, rate limits).
+const FORMS_ENDPOINT = "https://www.gitlever.ai/api/jesserazo-forms";
+
+type Touch = { url?: string; referrer?: string; utm?: Record<string, string>; at?: string } | null;
+
+// Convert this site's stored touches to the RSN attribution shape.
+function rsnTouch(t: Touch) {
+  if (!t) return null;
+  const utm = t.utm || {};
+  let refHost = "";
+  try {
+    refHost = t.referrer ? new URL(t.referrer).hostname : "";
+  } catch {
+    /* ignore */
+  }
+  return {
+    source: utm.utm_source || refHost || "direct",
+    medium: utm.utm_medium || (refHost ? "referral" : "none"),
+    campaign: utm.utm_campaign || "",
+    landing_page: t.url || "",
+    referrer: t.referrer || "",
+    at: t.at || new Date().toISOString(),
+  };
+}
+
+async function post(form: "apply" | "freedom", el: HTMLFormElement) {
+  const data = Object.fromEntries(new FormData(el).entries());
+  const a = readAttribution();
+  const res = await fetch(FORMS_ENDPOINT, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ ...data, attribution: readAttribution(), page: window.location.href }),
+    body: JSON.stringify({
+      ...data,
+      form,
+      pageUrl: window.location.href,
+      attribution: { site: "jesserazo.com", first: rsnTouch(a.first), last: rsnTouch(a.last) },
+    }),
   });
-  if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || "Request failed");
+  if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || "Something went wrong. Please try again.");
 }
 
 const field =
@@ -37,7 +69,7 @@ export function ApplicationForm({ calendarUrl }: { calendarUrl?: string }) {
     setError("");
     const revenue = String(new FormData(e.currentTarget).get("revenue") || "");
     try {
-      await post("/api/apply", e.currentTarget);
+      await post("apply", e.currentTarget);
       setStatus("done");
       track("application_submit", { revenue });
     } catch (err) {
@@ -104,7 +136,7 @@ export function ApplicationForm({ calendarUrl }: { calendarUrl?: string }) {
         <textarea id="freedom" name="freedom" rows={3} className={field} />
       </div>
       {/* Honeypot */}
-      <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
+      <input type="text" name="company_website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
       <div className="flex flex-col gap-3 md:col-span-2 md:flex-row md:items-center md:justify-between">
         <p className="text-xs text-muted">We respect your inbox and never sell your information.</p>
         <button
@@ -130,7 +162,7 @@ export function NewsletterForm({ dark = false }: { dark?: boolean }) {
     setStatus("sending");
     setError("");
     try {
-      await post("/api/subscribe", e.currentTarget);
+      await post("freedom", e.currentTarget);
       setStatus("done");
       track("freedom_signup");
     } catch (err) {
@@ -154,7 +186,7 @@ export function NewsletterForm({ dark = false }: { dark?: boolean }) {
       <input id="nl-first" name="firstName" required placeholder="First name" autoComplete="given-name" className={`${field} sm:w-36`} />
       <label htmlFor="nl-email" className="sr-only">Email</label>
       <input id="nl-email" name="email" type="email" required placeholder="you@company.com" autoComplete="email" className={`${field} sm:flex-1`} />
-      <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
+      <input type="text" name="company_website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
       <button
         type="submit"
         disabled={status === "sending"}

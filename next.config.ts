@@ -10,7 +10,7 @@ const csp = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self'",
-  "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com",
+  "connect-src 'self' https://www.gitlever.ai https://vitals.vercel-insights.com https://va.vercel-scripts.com",
   "frame-src https://app.razorsharpnetworks.com https://api.leadconnectorhq.com https://link.msgsndr.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
