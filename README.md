@@ -71,3 +71,8 @@ Push or merge to `main`. Vercel builds automatically. Do not deploy from Vercel 
   - `story_complete`, `timeback_complete`
   - `scroll_depth` (50, 90)
 - Vercel Web Analytics and Speed Insights must be enabled on the project for events to show in the dashboard.
+
+## Background photos (public domain)
+- `bg-dive.jpg`: U.S. Navy diver entering the water during training, Naval Diving and Salvage Training Center, 2014 (photo 140218-N-IC111-156). Wikimedia Commons, public domain (U.S. Navy work).
+- `bg-p3.jpg`: three P-3C Orion aircraft of VP-45 over Jacksonville, Florida. Official U.S. Navy photo, Wikimedia Commons, public domain.
+Both converted to black and white. Credited on the page as "Photo: U.S. Navy".

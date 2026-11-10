@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { PERSON_ID, jsonLd, pageMeta } from "@/lib/seo";
 import { SITE } from "@/lib/site";
-import { Button, Eyebrow, PageHero, PhotoSlot, Section } from "@/components/ui";
+import Image from "next/image";
+import { Button, Container, Eyebrow, PageHero, PhotoSlot, Section } from "@/components/ui";
+import { Reveal } from "@/components/Motion";
 import { VALUES } from "@/lib/site";
 
 export const metadata: Metadata = pageMeta({
@@ -17,6 +19,7 @@ const CHAPTERS = [
     eyebrow: "The deep end",
     photo: "about-dive.jpg",
     aspect: "aspect-[4/5]",
+    bg: { src: "bg-dive.jpg", alt: "U.S. Navy diver entering the water during training", position: "object-[50%_35%]", strength: "opacity-45", shade: "from-black/85 via-black/55 to-black/80" },
     title: "Systems keep you alive.",
     body: [
       "Right out of high school I moved to Seattle to train as a commercial diver at the Divers Institute of Technology. Cold water, heavy gear and no room for shortcuts.",
@@ -28,6 +31,7 @@ const CHAPTERS = [
     eyebrow: "Service",
     photo: "about-navy.jpg",
     aspect: "aspect-[4/3]",
+    bg: { src: "bg-p3.jpg", alt: "Three U.S. Navy P-3C Orion aircraft over Jacksonville, Florida", position: "object-[50%_40%]", strength: "opacity-70", shade: "from-black/75 via-black/35 to-black/70" },
     title: "Mission first. Crew always.",
     body: [
       "I joined the U.S. Navy as an Aviation Warfare Systems Operator (AW), flying aboard the P-3 Orion out of NAS Jacksonville, Florida. The P-3 was the Navy's long-range submarine hunter and maritime patrol aircraft for more than half a century.",
@@ -89,20 +93,38 @@ export default function About() {
         body="Commercial diver. Navy veteran. Single father of three girls. Christian first. I build businesses that create freedom instead of stealing time, and I help faith-driven founders do the same."
       />
 
-      {CHAPTERS.map((c, i) => (
-        <Section key={c.title} tone={i % 2 ? "sand" : "light"}>
+      {CHAPTERS.map((c, i) => {
+        const grid = (
           <div className={`grid items-center gap-12 md:grid-cols-2 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}>
             <div>
-              <Eyebrow>{c.eyebrow}</Eyebrow>
+              <Eyebrow className={c.bg ? "text-white/60" : ""}>{c.eyebrow}</Eyebrow>
               <h2 className="text-5xl md:text-7xl">{c.title}</h2>
               {c.body.map((p) => (
-                <p key={p} className="mt-4 leading-relaxed text-muted">{p}</p>
+                <p key={p} className={`mt-4 leading-relaxed ${c.bg ? "text-white/80" : "text-muted"}`}>{p}</p>
               ))}
             </div>
             <PhotoSlot label={c.eyebrow} photo={c.photo} className={`${c.aspect} w-full`} />
           </div>
-        </Section>
-      ))}
+        );
+        if (!c.bg) {
+          return (
+            <Section key={c.title} tone={i % 2 ? "sand" : "light"}>
+              {grid}
+            </Section>
+          );
+        }
+        // Black-and-white U.S. Navy photo (public domain) as a full-bleed background.
+        return (
+          <section key={c.title} className="relative overflow-hidden bg-black py-20 text-white/80 md:py-28 [&_h2]:text-white">
+            <Image src={`/photos/${c.bg.src}`} alt={c.bg.alt} fill sizes="100vw" className={`object-cover ${c.bg.position} ${c.bg.strength}`} />
+            <div className={`absolute inset-0 bg-gradient-to-r ${c.bg.shade}`} aria-hidden="true" />
+            <Container className="relative">
+              <Reveal>{grid}</Reveal>
+            </Container>
+            <p className="absolute bottom-3 right-4 text-[10px] uppercase tracking-widest text-white/40">Photo: U.S. Navy</p>
+          </section>
+        );
+      })}
 
       <Section tone="dark">
         <div className="mx-auto max-w-3xl text-center">
