@@ -40,7 +40,9 @@ export const personLd = {
   image: `${SITE.url}/photos/hero-portrait.jpg`,
   jobTitle: "Founder, RazoRSharp Networks",
   description:
-    "Jesse Razo helps faith-driven founders move from Operator to Architect with AI, automation and the TimeBACK System, so they get time back for faith, family and legacy.",
+    "Jesse Razo is a commercial diver turned U.S. Navy veteran, single father of three, and Christian business owner. As founder of RazoRSharp Networks he helps faith-driven founders move from Operator to Architect with AI, automation and the TimeBACK System.",
+  alumniOf: { "@type": "EducationalOrganization", name: "Divers Institute of Technology", address: "Seattle, Washington" },
+  memberOf: { "@type": "Organization", name: "United States Navy" },
   worksFor: {
     "@type": "Organization",
     name: "RazoRSharp Networks",

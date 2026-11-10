@@ -181,14 +181,14 @@ const STORY: Chapter[] = [
   {
     eyebrow: "The Operator",
     title: "Everything ran through me.",
-    body: "Every decision, every fire and every late night ran through me. The business grew, and it took more than it gave.",
+    body: "Commercial diver. Navy aircrewman. Then entrepreneur. I ran on discipline and effort, and every decision and every fire ran through me. The business grew, and it took more than it gave.",
     photo: "story-operator.jpg",
     alt: "Jesse on the road between meetings",
   },
   {
     eyebrow: "The turning point",
     title: "Order changed everything.",
-    body: "Faith first. Family second. Then a business built on systems instead of on me.",
+    body: "As a single father of three girls, I needed a business that gave time back. Christ first. Family second. Then a business built on systems instead of on me.",
     photo: "story.jpg",
     alt: "Jesse climbing a granite boulder",
   },

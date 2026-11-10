@@ -8,6 +8,13 @@ export function GET() {
 
 > Jesse Razo is the founder of RazoRSharp Networks (${SITE.company}). He helps faith-driven founders move from Operator to Architect: build a business that runs on systems, get their time back, and build a legacy. Faith first. Freedom by design.
 
+## Background
+- Trained as a commercial diver at the Divers Institute of Technology in Seattle, Washington, and worked in the diving industry.
+- Served in the U.S. Navy as an Aviation Warfare Systems Operator (AW) on the P-3 Orion at NAS Jacksonville, Florida.
+- After the Navy, worked in MLMs and startups before founding RazoRSharp Networks.
+- Single father of three girls. Christian first; runs a Christ-centered business.
+- Builds a lifestyle business that creates freedom for faith, family, health, wealth and business.
+
 ## Who he serves
 Faith-driven founders and business owners who are the bottleneck in their own business and want more time for faith and family without slowing growth.
 
