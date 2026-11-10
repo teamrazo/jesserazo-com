@@ -27,7 +27,7 @@ Drop files into `public/photos/` with these names. Each slot shows a placeholder
 
 | File | Where it shows | Shape |
 | --- | --- | --- |
-| hero-portrait.jpg | Home hero, right half (shown whole, not cropped) | Square portrait on black |
+| hero-portrait.jpg | Home hero, right side top to bottom on pure black (shown whole) | Square portrait on black |
 | story.jpg | Home "From Operator to Architect" | Portrait 4:5 |
 | legacy.jpg | Home Legacy section | Portrait 4:5 |
 | about-operator.jpg | My Story chapter 1 | Landscape 4:3 |

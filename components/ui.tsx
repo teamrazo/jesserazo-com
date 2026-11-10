@@ -83,6 +83,7 @@ export function PhotoSlot({
   priority = false,
   sizes = "(min-width: 768px) 50vw, 100vw",
   fit = "cover",
+  position = "center",
 }: {
   label: string;
   photo?: string;
@@ -93,12 +94,13 @@ export function PhotoSlot({
   sizes?: string;
   /** "contain" shows the whole photo (e.g. a square portrait on black) instead of cropping it. */
   fit?: "cover" | "contain";
+  position?: "center" | "bottom" | "right-bottom";
 }) {
   const src = photo && existsSync(join(process.cwd(), "public", "photos", photo)) ? `/photos/${photo}` : null;
   if (src) {
     return (
       <div className={`${className.includes("absolute") ? "" : "relative "}overflow-hidden ${className}`}>
-        <Image src={src} alt={label} fill priority={priority} sizes={sizes} className={`${fit === "contain" ? "object-contain object-bottom" : "object-cover"} transition-transform duration-[1200ms] ease-out hover:scale-[1.04]`} />
+        <Image src={src} alt={label} fill priority={priority} sizes={sizes} className={`${fit === "contain" ? "object-contain" : "object-cover"} ${{ center: "object-center", bottom: "object-bottom", "right-bottom": "object-right-bottom" }[position]} ${fit === "contain" ? "" : "transition-transform duration-[1200ms] ease-out hover:scale-[1.04]"}`} />
       </div>
     );
   }

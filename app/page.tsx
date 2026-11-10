@@ -8,41 +8,48 @@ export default function Home() {
 
   return (
     <>
-      {/* Hero: headline left, portrait right (whole photo, never cropped), stat bar below */}
-      <section className="relative overflow-hidden bg-charcoal">
-        <Container className="relative pb-12 pt-20 md:pt-28">
-          <div className="grid items-center gap-12 md:grid-cols-[1.15fr_0.85fr] md:gap-10">
-            <div>
-              <Eyebrow className="text-white/70">Founder. Builder. Faith-driven.</Eyebrow>
-              <HeadlineLines
-                className="text-6xl text-white md:text-7xl lg:text-[6.5rem]"
-                lines={[{ text: "Faith first." }, { text: "Freedom by design.", accent: true }]}
-              />
-              <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/75">
-                Build a business that serves your faith, your family and your future. Stop operating. Start architecting.
-              </p>
-              <div className="mt-10">
-                <Button href="/work-with-jesse" track="hero">Work with Jesse</Button>
-              </div>
-            </div>
-            <PhotoSlot
-              label="Jesse Razo"
-              photo="hero-portrait.jpg"
-              priority
-              sizes="(min-width: 768px) 42vw, 100vw"
-              dark
-              className="aspect-square w-full bg-black"
+      {/* Hero: pure black so the portrait's black background blends in. Portrait runs top to bottom. */}
+      <section className="relative overflow-hidden bg-black">
+        <div className="absolute inset-y-0 right-0 hidden w-[56%] md:block lg:w-[54%]">
+          <PhotoSlot
+            label="Jesse Razo"
+            photo="hero-portrait.jpg"
+            fit="contain"
+            position="right-bottom"
+            priority
+            sizes="(min-width: 768px) 56vw, 1px"
+            dark
+            className="h-full w-full bg-black"
+          />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-black to-transparent" aria-hidden="true" />
+        </div>
+        <Container className="relative flex items-center pb-12 pt-16 md:min-h-[calc(100svh-4rem)] md:max-h-[60rem] md:py-24">
+          <div className="w-full md:max-w-[48%]">
+            <Eyebrow className="text-white/70">Founder. Builder. Faith-driven.</Eyebrow>
+            <HeadlineLines
+              className="text-6xl text-white md:text-7xl lg:text-[6.5rem]"
+              lines={[{ text: "Faith first." }, { text: "Freedom by design.", accent: true }]}
             />
+            <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/75">
+              Build a business that serves your faith, your family and your future. Stop operating. Start architecting.
+            </p>
+            <div className="mt-10">
+              <Button href="/work-with-jesse" track="hero">Work with Jesse</Button>
+            </div>
           </div>
+        </Container>
+        <PhotoSlot label="Jesse Razo" photo="hero-portrait.jpg" priority sizes="(min-width: 768px) 1px, 100vw" dark className="aspect-square w-full bg-black md:hidden" />
+      </section>
 
-          <div className="mt-20 grid grid-cols-2 gap-8 border-t border-white/10 pt-10 md:grid-cols-4">
-            {STATS.map((s) => (
-              <div key={s.label} className="flex items-center gap-3">
-                <span className="font-display text-4xl text-white md:text-5xl">{s.value}</span>
-                <span className="max-w-[9rem] text-xs leading-snug text-white/60">{s.label}</span>
-              </div>
-            ))}
-          </div>
+      {/* Track record */}
+      <section aria-label="Track record" className="border-t border-white/10 bg-black">
+        <Container className="grid grid-cols-2 gap-8 py-10 md:grid-cols-4">
+          {STATS.map((st) => (
+            <div key={st.label} className="flex items-center gap-3">
+              <span className="font-display text-4xl text-white md:text-5xl">{st.value}</span>
+              <span className="max-w-[9rem] text-xs leading-snug text-white/60">{st.label}</span>
+            </div>
+          ))}
         </Container>
       </section>
 
