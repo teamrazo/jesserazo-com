@@ -37,7 +37,7 @@ export const personLd = {
   "@id": PERSON_ID,
   name: "Jesse Razo",
   url: SITE.url,
-  image: `${SITE.url}/photos/hero.jpg`,
+  image: `${SITE.url}/photos/hero-portrait.jpg`,
   jobTitle: "Founder, RazoRSharp Networks",
   description:
     "Jesse Razo helps faith-driven founders move from Operator to Architect with AI, automation and the TimeBACK System, so they get time back for faith, family and legacy.",

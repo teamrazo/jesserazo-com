@@ -82,6 +82,7 @@ export function PhotoSlot({
   dark = false,
   priority = false,
   sizes = "(min-width: 768px) 50vw, 100vw",
+  fit = "cover",
 }: {
   label: string;
   photo?: string;
@@ -90,12 +91,14 @@ export function PhotoSlot({
   priority?: boolean;
   /** Use "1px" for the breakpoint where this copy is hidden so it never downloads at full size. */
   sizes?: string;
+  /** "contain" shows the whole photo (e.g. a square portrait on black) instead of cropping it. */
+  fit?: "cover" | "contain";
 }) {
   const src = photo && existsSync(join(process.cwd(), "public", "photos", photo)) ? `/photos/${photo}` : null;
   if (src) {
     return (
       <div className={`${className.includes("absolute") ? "" : "relative "}overflow-hidden ${className}`}>
-        <Image src={src} alt={label} fill priority={priority} sizes={sizes} className="object-cover transition-transform duration-[1200ms] ease-out hover:scale-[1.04]" />
+        <Image src={src} alt={label} fill priority={priority} sizes={sizes} className={`${fit === "contain" ? "object-contain object-bottom" : "object-cover"} transition-transform duration-[1200ms] ease-out hover:scale-[1.04]`} />
       </div>
     );
   }

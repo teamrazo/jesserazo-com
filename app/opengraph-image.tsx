@@ -5,5 +5,5 @@ export const size = ogSize;
 export const contentType = "image/png";
 
 export default function Image() {
-  return ogCard({ eyebrow: "Faith. Family. Freedom. Legacy.", line1: "Faith first.", line2: "Freedom by design.", photo: "hero.jpg" });
+  return ogCard({ eyebrow: "Faith. Family. Freedom. Legacy.", line1: "Faith first.", line2: "Freedom by design.", photo: "hero-portrait.jpg" });
 }
